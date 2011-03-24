@@ -1,3 +1,8 @@
 [user]
 	email = gnuk0001@gmail.com
 	name = Renzo Carbonara
+
+[color]
+	branch = auto
+	diff = auto
+	status = auto
