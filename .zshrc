@@ -69,7 +69,7 @@ for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
 done
 PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
-PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_BLUE}%%${PR_NO_COLOR} "
+PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}%%${PR_NO_COLOR} "
 
 export LESS="FSRX"
 alias ls="ls --color"
