@@ -62,15 +62,40 @@ set list lcs=tab:>-,trail:-,extends:>
 syntax match CurrentLine /.*\%#.*/
 hi link CurrentLine Visual
 au BufNewFile,BufRead *.c,*.h,*.py,*.cc,*.cpp,*.rst exec 'match Todo /\%>' .  &textwidth . 'v.\+/'
+" remove trailing whitespace
+autocmd BufWritePre * :%s/\s\+$//e
+
 " python
 " im :<CR> :<CR><TAB>
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+
 " ruby
 autocmd BufRead *.rb set ts=2 sts=2 sw=2
+
 " scala
 autocmd BufRead *.scala set smartindent ts=2 sts=2 sw=2
-" remove trailing whitespace
-autocmd BufWritePre * :%s/\s\+$//e
+
+" vala
+autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+au BufRead,BufNewFile *.vala            setfiletype vala
+au BufRead,BufNewFile *.vapi            setfiletype vala
+" Disable valadoc syntax highlight
+" "let vala_ignore_valadoc = 0
+"
+" " Enable comment strings
+" let vala_comment_strings = 1
+"
+" " Highlight space errors
+" let vala_space_errors = 1
+" " Disable trailing space errors
+" "let vala_no_trail_space_error = 1
+" " Disable space-tab-space errors
+" let vala_no_tab_space_error = 1
+"
+" " Minimum lines used for comment syncing (default 50)
+" "let vala_minlines = 120
+
 " sass
 "au! BufRead,BufNewFile *.sass         setfiletype sass
 
