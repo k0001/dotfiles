@@ -70,9 +70,9 @@ done
 PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
 if [[ $EUID -ne 0 ]]; then
-    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}%%${PR_NO_COLOR} "
+    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}→${PR_NO_COLOR} "
 else
-    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}#${PR_NO_COLOR} "
+    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%%${PR_NO_COLOR} "
 fi
 
 export LESS="FSRX"
