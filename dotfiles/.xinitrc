@@ -12,7 +12,7 @@
 xrdb -merge .Xresources
 xsetroot -cursor_name left_ptr
 setxkbmap -layout es
-#exec ck-launch-session $HOME/.xmonad/xmonad-x86_64-linux
 mpd ~/.mpd/mpd.conf
+syndaemon -t -k -i 2 -d
 exec $HOME/.xmonad/xmonad-x86_64-linux
 
