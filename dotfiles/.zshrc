@@ -3,8 +3,9 @@ HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
 
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
+setopt extendedglob
+setopt autocd
+setopt correctall
 
 zstyle ':completion:*' auto-description '`specify: %d'\'''
 zstyle ':completion:*' completer _expand _complete _correct
@@ -56,7 +57,6 @@ bindkey "\eOF" end-of-line
 bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
 
-
 # colors
 autoload colors zsh/terminfo
 if [[ "$terminfo[colors]" -ge 8 ]]; then
@@ -72,46 +72,9 @@ PR_NO_COLOR="%{$terminfo[sgr0]%}"
 if [[ $EUID -ne 0 ]]; then
     PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}→${PR_NO_COLOR} "
 else
-    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%%${PR_NO_COLOR} "
+    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%#${PR_NO_COLOR} "
 fi
 
-export LESS="FSRX"
 alias ls="ls --color"
 alias grep="grep --color"
 
-setopt extendedglob
-setopt autocd
-setopt correctall
-
-export DEBFULLNAME="Renzo Carbonara"
-export DEBEMAIL="gnuk0001@gmail.com"
-
-
-export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\E[0m'           # end mode
-export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
-
-
-export EDITOR=$(which vim)
-
-export TERM=xterm-256color
-
-#Colores para el grep
-export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='1;31'
-
-export PIP_REQUIRE_VIRTUALENV=1
-export PIP_RESPECT_VIRTUALENV=1
-
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-
-# This loads RVM into a shell session.
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-export PATH="$HOME/bin:$PATH"
-
-export NODE_PATH="$HOME/.node_libraries:$NODE_PATH"
