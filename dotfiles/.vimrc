@@ -53,8 +53,6 @@ au! BufWritePre * :%s/\s\+$//e
 au! BufRead,BufNewFile *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 " ruby
 au! BufRead,BufNewFile *.rb set ts=2 sts=2 sw=2
-" scala
-au! BufRead,BufNewFile *.scala set smartindent ts=2 sts=2 sw=2
 " go
 au BufRead,BufNewFile *.go set filetype=go
 " sass
