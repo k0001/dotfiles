@@ -4,15 +4,16 @@ Config { -- font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
        , fgColor = "grey"
        , position = Top
        , commands = [ Run MultiCpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                    , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 30
                     , Run Memory ["-t","<usedratio>%"] 30
-                    , Run Swap ["-t", "<usedratio>%" ] 10
+                    --, Run Swap ["-t", "<usedratio>%" ] 10
                     , Run Date "%a %b %_d %H:%M" "date" 10
                     , Run BatteryP ["BAT0"]
-                                   ["-t", "Bat:<left>% <timeleft> <acstatus><watts>",
+                                   ["-t", "<acstatus><watts> <timeleft><fc=yellow><left></fc>%",
                                     "-L", "10", "-H", "80", "-p", "3", "-n", "grey90",
-                                    "--", "-O", "<fc=green>On</fc> - ", "-o", "",
+                                    "--", "-O", "AC", "-o", "<fc=white>BATTERY</fc> ",
                                     "-L", "-15", "-H", "-5",
+                                    "-f", "ADP1/online",
                                     "-l", "red", "-m", "lightblue", "-h", "green"] 50
                     , Run CoreTemp ["-t", "Temp: <core0>|<core1>",
                                     "-L", "40", "-H", "65",
@@ -21,6 +22,6 @@ Config { -- font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %battery% · %coretemp% · %multicpu% · MemSwap: %memory%|%swap% · %wlan0% · <fc=#ee9a00>%date%</fc>"
+       , template = "%StdinReader% }{ %coretemp% · %multicpu% · Mem: %memory% · %wlan0% · <fc=#ee9a00>%date%</fc> · %battery%"
        }
 
