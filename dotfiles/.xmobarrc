@@ -10,10 +10,10 @@ Config { -- font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     , Run Date "%a %b %_d %H:%M" "date" 10
                     , Run BatteryP ["BAT0"]
                                    ["-t", "Bat:<left>% <timeleft> <acstatus><watts>",
-                                    "-L", "10", "-H", "80", "-p", "3",
+                                    "-L", "10", "-H", "80", "-p", "3", "-n", "grey90",
                                     "--", "-O", "<fc=green>On</fc> - ", "-o", "",
                                     "-L", "-15", "-H", "-5",
-                                    "-l", "red", "-m", "blue", "-h", "green"] 50
+                                    "-l", "red", "-m", "lightblue", "-h", "green"] 50
                     , Run CoreTemp ["-t", "Temp: <core0>|<core1>",
                                     "-L", "40", "-H", "65",
                                     "-l", "lightblue", "-n", "gray90", "-h", "red"] 50
