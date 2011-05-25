@@ -1,30 +1,47 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+# .zshrc
 
+# ZSH settings
 setopt extendedglob
+setopt prompt_subst
 setopt autocd
 setopt correctall
+setopt emacs
+setopt nohup
+setopt cdablevars
+setopt ignoreeof
+setopt nobgnice
+setopt nobanghist
+setopt clobber
+setopt shwordsplit
+setopt interactivecomments
+setopt autopushd pushdminus pushdsilent pushdtohome
+setopt histreduceblanks histignorespace inc_append_history
 
-zstyle ':completion:*' auto-description '`specify: %d'\'''
-zstyle ':completion:*' completer _expand _complete _correct
-zstyle ':completion:*' file-sort name
-zstyle ':completion:*' format ''\''Completing %d'\'''
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' insert-unambiguous false
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' menu select=1
-zstyle ':completion:*' original true
+# ZSH completion
+autoload -U compinit; compinit
+# List of completers to use
+zstyle ":completion:*" completer _expand _complete _match _approximate
+# Allow approximate
+zstyle ":completion:*:match:*" original only
+zstyle ":completion:*:approximate:*" max-errors 1 numeric
+# Selection prompt as menu
+zstyle ":completion:*" menu select=1
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
+# Menu selection for PID completion
+zstyle ":completion:*:*:kill:*" menu yes select
+zstyle ":completion:*:kill:*" force-list always
+zstyle ":completion:*:processes" command "ps -au$USER"
+zstyle ":completion:*:*:kill:*:processes" list-colors "=(#b) #([0-9]#)*=0=01;32"
+# Don't select parent dir on cd
+zstyle ":completion:*:cd:*" ignore-parents parent pwd
+# Complete with colors
+zstyle ":completion:*" list-colors ""
 
+# not sure
 zstyle :compinstall filename '$HOME/.zshrc'
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+compctl -k "(add delete draft edit list import preview publish update)" nb
+
 
 namedir () { $1=$PWD ;  : ~$1 }
 
@@ -59,20 +76,52 @@ bindkey "\e[F" end-of-line
 
 # colors
 autoload colors zsh/terminfo
+
 if [[ "$terminfo[colors]" -ge 8 ]]; then
     colors
 fi
+
+
+# Prompt stuff
+
 for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
     eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
     eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-    (( count = $count + 1 ))
 done
 PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
-if [[ $EUID -ne 0 ]]; then
-    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}→${PR_NO_COLOR} "
+
+if [[ "${TERM}" == "dumb" ]]; then
+    # Simple prompt for dumb terminals
+    unsetopt zle
+    PROMPT='%n@%m %l %~ %? %# '
 else
-    PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@%m ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%#${PR_NO_COLOR} "
+    if [[ "${TERM}" == "linux" ]]; then
+        # Simple prompt with Zenburn colors for the console
+        echo -en "\e]P01e2320" # zenburn black (normal black)
+        echo -en "\e]P8709080" # bright-black  (darkgrey)
+        echo -en "\e]P1705050" # red           (darkred)
+        echo -en "\e]P9dca3a3" # bright-red    (red)
+        echo -en "\e]P260b48a" # green         (darkgreen)
+        echo -en "\e]PAc3bf9f" # bright-green  (green)
+        echo -en "\e]P3dfaf8f" # yellow        (brown)
+        echo -en "\e]PBf0dfaf" # bright-yellow (yellow)
+        echo -en "\e]P4506070" # blue          (darkblue)
+        echo -en "\e]PC94bff3" # bright-blue   (blue)
+        echo -en "\e]P5dc8cc3" # purple        (darkmagenta)
+        echo -en "\e]PDec93d3" # bright-purple (magenta)
+        echo -en "\e]P68cd0d3" # cyan          (darkcyan)
+        echo -en "\e]PE93e0e3" # bright-cyan   (cyan)
+        echo -en "\e]P7dcdccc" # white         (lightgrey)
+        echo -en "\e]PFffffff" # bright-white  (white)
+    fi
+
+    # Set the cool prompt!
+    if [[ $EUID -ne 0 ]]; then
+        PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@${PR_LIGHT_YELLOW}%M${PR_NO_COLOR}:%l ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}%%${PR_NO_COLOR} "
+    else
+        PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@${PR_LIGHT_YELLOW}%M${PR_NO_COLOR}:%l ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%#${PR_NO_COLOR} "
+    fi
 fi
 
 alias ls="ls --color"
