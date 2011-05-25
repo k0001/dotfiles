@@ -50,15 +50,16 @@ au! BufWritePre * :%s/\s\+$//e
 
 " python
 " im :<CR> :<CR><TAB>
+au! BufRead,BufNewFile *.py set ts=4 sts=4 sw=4
 au! BufRead,BufNewFile *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 " ruby
-au! BufRead,BufNewFile *.rb set ts=2 sts=2 sw=2
+au! BufRead,BufNewFile *.rb set smartindent ts=2 sts=2 sw=2
 " go
-au BufRead,BufNewFile *.go set filetype=go
+au BufRead,BufNewFile *.go set smartindent
 " sass
-au! BufRead,BufNewFile *.sass         setfiletype sass
+au! BufRead,BufNewFile *.sass setfiletype sass
 " scss
-au! BufRead,BufNewFile *.scss         setfiletype scss
+au! BufRead,BufNewFile *.scss setfiletype scss
 " scala
 au! BufRead,BufNewFile *.scala set smartindent ts=2 sts=2 sw=2
 " html
@@ -66,9 +67,9 @@ au! BufRead,BufNewFile *.html set smartindent ts=2 sts=2 sw=2
 " vala
 au! BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au! BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+au! BufRead,BufNewFile *.vala setfiletype vala
+au! BufRead,BufNewFile *.vapi setfiletype vala
 
-au! BufRead,BufNewFile *.vala            setfiletype vala
-au! BufRead,BufNewFile *.vapi            setfiletype vala
 " Disable valadoc syntax highlight
 " "let vala_ignore_valadoc = 0
 "
