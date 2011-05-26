@@ -11,6 +11,8 @@ set modifiable
 set encoding=utf-8
 set ff=unix
 set nobomb
+set wildmenu
+set cmdheight=2
 imap <up> <Nop>
 imap <down> <Nop>
 imap <left> <Nop>
