@@ -30,22 +30,28 @@ urxvt*urgentOnBell:       true
 !
 ! Extensions
 urxvt*perl-lib:        /usr/lib/urxvt/perl/
-urxvt*perl-ext-common: default,matcher,searchable-scrollback
-urxvt*urlLauncher:     /usr/bin/xdg-open
-urxvt*matcher.button:  1
+urxvt*perl-ext-common: default,url-select,searchable-scrollback,tabbed
+! url-select
+URxvt.keysym.M-u:    perl:url-select:select_next
+URxvt.urlLauncher:   /usr/bin/xdg-open
+URxvt.underlineURLs: true
 ! Catch ugly URLs
-urxvt*cutchars:        `"'()*<>[]{|}
+!urxvt*cutchars:        "`\"'()*<>[]{|}"
 !
 ! Appearance
 !urxvt*font:     -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
 !urxvt*boldFont: -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-i
-urxvt*font:        xft:Envy Code R:pixelsize=14
+urxvt*font:        xft:Envy Code R:pixelsize=13
 !
 ! Cursor
 urxvt*cursorColor: #DCDCCC
 ! URLs
 urxvt*.colorUL:    #ffffff
-!
+! tabs
+URxvt.tabbed.tabbar-fg: 1
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg:    15
+URxvt.tabbed.tab-bg:    0
 ! Pseudo Transparency
 !urxvt*shading:    50
 !urxvt*transparent:true
@@ -95,7 +101,7 @@ xterm*utf8:          2
 xterm*eightBitInput: true
 !xterm*font:        -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
 !xterm*boldFont:    -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-iso8859-2
-urxvt*font:        xft:Envy Code R:pixelsize=14
+xterm*font:        xft:Envy Code R:pixelsize=13
 xterm*cursorColor: #DCDCCC
 ! Zenburn
 xterm*background:  #3f3f3f
@@ -135,7 +141,8 @@ XLock.info:
 !XLock.info:         Enter password to unlock \nSelect icon to lock
 XLock.validate:      Validating login...
 XLock.invalid:       Login failed
-XLock*font:          -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
+!XLock*font:          -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
+XLock*font:          xft:DejaVu Sans:pixelsize=13
 !XLock.ncolors:      200
 !XLock.dpmsstandby:  600
 !XLock.dpmssuspend:  1200
