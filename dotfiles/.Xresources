@@ -49,9 +49,9 @@ urxvt*cursorColor: #DCDCCC
 urxvt*.colorUL:    #ffffff
 ! tabs
 URxvt.tabbed.tabbar-fg: 1
-URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tabbar-bg: background
 URxvt.tabbed.tab-fg:    15
-URxvt.tabbed.tab-bg:    0
+URxvt.tabbed.tab-bg:    background
 ! Pseudo Transparency
 !urxvt*shading:    50
 !urxvt*transparent:true
