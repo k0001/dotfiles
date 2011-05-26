@@ -8,7 +8,6 @@ setopt correctall
 setopt emacs
 setopt nohup
 setopt cdablevars
-setopt ignoreeof
 setopt nobgnice
 setopt nobanghist
 setopt clobber
@@ -98,8 +97,9 @@ if [[ "${TERM}" == "dumb" ]]; then
 else
     if [[ "${TERM}" == "linux" ]]; then
         # Simple prompt with Zenburn colors for the console
-        echo -en "\e]P01e2320" # zenburn black (normal black)
-        echo -en "\e]P8709080" # bright-black  (darkgrey)
+        # These two blacks suck on linux terminals
+        #echo -en "\e]P01e2320" # zenburn black (normal black)
+        #echo -en "\e]P8709080" # bright-black  (darkgrey)
         echo -en "\e]P1705050" # red           (darkred)
         echo -en "\e]P9dca3a3" # bright-red    (red)
         echo -en "\e]P260b48a" # green         (darkgreen)
