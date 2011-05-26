@@ -49,15 +49,16 @@ urxvt*cursorColor: #DCDCCC
 urxvt*.colorUL:    #ffffff
 ! tabs
 URxvt.tabbed.tabbar-fg: 1
-URxvt.tabbed.tabbar-bg: background
+URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg:    15
-URxvt.tabbed.tab-bg:    background
+URxvt.tabbed.tab-bg:    0
 ! Pseudo Transparency
 !urxvt*shading:    50
 !urxvt*transparent:true
 !
 ! Zenburn color-scheme
 urxvt*background:  #3f3f3f
+!urxvt*background:  #1E2320
 urxvt*foreground:  #dcdccc
 ! black + red
 !urxvt*color0:     #3f3f3f
