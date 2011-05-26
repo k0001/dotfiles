@@ -4,7 +4,7 @@ export DEBEMAIL="gnuk0001@gmail.com"
 export EDITOR=$(which vim)
 
 # Colors
-#export TERM=xterm-256color
+export TERM=xterm-256color
 
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;31'
