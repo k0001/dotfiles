@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Layout.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
@@ -11,7 +12,7 @@ main = do
     xmonad $ defaultConfig {
             workspaces         = myWorkspaces,
             manageHook         = manageDocks <+> manageHook defaultConfig,
-            layoutHook         = avoidStruts  $  layoutHook defaultConfig,
+            layoutHook         = smartBorders $ avoidStruts  $  layoutHook defaultConfig,
             logHook            = dynamicLogWithPP xmobarPP {
                ppOutput        = hPutStrLn xmproc,
                ppTitle         = xmobarColor "green" "" . shorten 50
@@ -25,16 +26,25 @@ main = do
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myKeys =
     [
-      ((mod4Mask .|. shiftMask, xK_l), spawn "slock"),
+      ((mod4Mask .|. shiftMask, xK_z), spawn "xlock"),
       ((0, xK_Print),                  spawn "scrot"),
 
-      -- Audio control. See <X11/XF86keysym.g>
+      -- Left Alt + Eject triggers Magic SysRq
+      -- ((mod1Mask, 0x1008ff2c),          spawn "echo t > /proc/sysrq-trigger"),
+
+      -- Detect X diplays (nvidia) and setup TwinView.
+      -- XF86XK_LaunchA
+      ((0, 0x1008FF4A),                spawn "disper -d auto -e"),
+
+      -- Audio control. See <X11/XF86keysym.h>
       -- XF86XK_AudioPlay
       ((0, 0x1008FF14),                spawn "ncmpcpp toggle"),
-      -- XF86XK_AudioPrev
+      -- XF86XK_AudioPrev, XF86XK_Prev
       ((0, 0x1008FF16),                spawn "ncmpcpp prev"),
-      -- XF86XK_AudioNext
+      ((0, 0x1008FF26),                spawn "ncmpcpp prev"),
+      -- XF86XK_AudioNext, XF86XK_Next
       ((0, 0x1008FF17),                spawn "ncmpcpp next"),
+      ((0, 0x1008FF27),                spawn "ncmpcpp next"),
       -- XF86XK_AudioLowerVolume
       ((0, 0x1008FF11),                spawn "pulsevolume down"),
       -- XF86XK_AudioRaiseVolume
