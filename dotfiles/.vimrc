@@ -99,7 +99,7 @@ au! BufRead,BufNewFile *.vapi setfiletype vala
 
 if &t_Co > 255
     " More than 256 colors are available
-    colo zenburn
+    colo las
 else
     colo torte
 endif

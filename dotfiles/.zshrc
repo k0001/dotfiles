@@ -118,9 +118,9 @@ else
 
     # Set the cool prompt!
     if [[ $EUID -ne 0 ]]; then
-        PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@${PR_LIGHT_YELLOW}%M${PR_NO_COLOR}:%l ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}%%${PR_NO_COLOR} "
+        PROMPT="${PR_GREEN}%n${PR_NO_COLOR}@${PR_LIGHT_CYAN}%M${PR_NO_COLOR}:%l ${PR_LIGHT_GREEN}%~ ${PR_NO_COLOR}%? ${PR_BLUE}%%${PR_NO_COLOR} "
     else
-        PROMPT="${PR_WHITE}%n${PR_NO_COLOR}@${PR_LIGHT_YELLOW}%M${PR_NO_COLOR}:%l ${PR_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%#${PR_NO_COLOR} "
+        PROMPT="${PR_RED}%n${PR_NO_COLOR}@${PR_LIGHT_CYAN}%M${PR_NO_COLOR}:%l ${PR_LIGHT_GREEN}%~ ${PR_NO_COLOR}%? ${PR_RED}%#${PR_NO_COLOR} "
     fi
 fi
 

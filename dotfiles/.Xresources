@@ -42,6 +42,9 @@ URxvt.underlineURLs: true
 !urxvt*font:     -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
 !urxvt*boldFont: -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-i
 urxvt*font:        xft:Envy Code R:pixelsize=13
+URxvt.italicFont:        xft:Envy Code R:italic:autohint=true:pixelsize=13
+URxvt.boldItalicFont:    xft:Envy Coder R:bold:italic:autohint=true:pixelsize=13
+
 !
 ! Cursor
 urxvt*cursorColor: #DCDCCC
@@ -56,36 +59,87 @@ urxvt*.colorUL:    #ffffff
 !urxvt*shading:    50
 !urxvt*transparent:true
 !
-! Zenburn color-scheme
-urxvt*background:  #3f3f3f
-!urxvt*background:  #1E2320
-urxvt*foreground:  #dcdccc
-! black + red
-!urxvt*color0:     #3f3f3f
-urxvt*color0:      #1E2320
-urxvt*color1:      #705050
-! green + yellow
-urxvt*color2:      #60b48a
-urxvt*color3:      #dfaf8f
-! blue + purple
-urxvt*color4:      #506070
-urxvt*color5:      #dc8cc3
-! cyan + white
-urxvt*color6:      #8cd0d3
-urxvt*color7:      #dcdccc
-! bright-black + bright-red
-urxvt*color8:      #709080
-urxvt*color9:      #dca3a3
-! bright-green + bright-yellow
-urxvt*color10:     #c3bf9f
-urxvt*color11:     #f0dfaf
-! bright-blue + bright-purple
-urxvt*color12:     #94bff3
-urxvt*color13:     #ec93d3
-! bright-cyan + bright-white
-urxvt*color14:     #93e0e3
-urxvt*color15:     #ffffff
-!}}}
+
+! cool colors
+urxvt*foreground: #f2f2f2
+urxvt*background: #101010
+! Normal
+urxvt*color0:    #6c6c6c
+urxvt*color1:    #e9897c
+urxvt*color2:    #b6e77d
+urxvt*color3:    #ecebbe
+urxvt*color4:    #a9cdeb
+urxvt*color5:    #ea96eb
+urxvt*color6:    #c9caec
+urxvt*color7:    #f2f2f2
+! Light
+urxvt*color8:    #747474
+urxvt*color9:    #f99286
+urxvt*color10:    #c3f786
+urxvt*color11:    #fcfbcc
+urxvt*color12:    #b6defb
+urxvt*color13:    #fba1fb
+urxvt*color14:    #d7d9fc
+urxvt*color15:    #e2e2e2
+
+!!Daisuke colors
+!URxvt*background: #333333
+!URxvt*foreground: #dcdccc
+!!black
+!URxvt*color0: #1e1e1e
+!URxvt*color8: #505050
+!!red
+!URxvt*color1: #b04020
+!URxvt*color9: #dd4010
+!!green
+!URxvt*color2: #afd700
+!URxvt*color10: #daff30
+!!yellow
+!URxvt*color3: #f7cf0a
+!URxvt*color11: #fce70d
+!!blue
+!URxvt*color4: #3060aa
+!URxvt*color12: #6099dd
+!!magenta
+!URxvt*color5: #d6156c
+!URxvt*color13: #fe4365
+!!cyan
+!URxvt*color6: #a0c2de
+!URxvt*color14: #c9dee8
+!!white
+!URxvt*color7: #808080
+!URxvt*color15: #b0b0b0
+
+!! Zenburn color-scheme
+!urxvt*background:  #3f3f3f
+!!urxvt*background:  #1E2320
+!urxvt*foreground:  #dcdccc
+!! black + red
+!!urxvt*color0:     #3f3f3f
+!urxvt*color0:      #1E2320
+!urxvt*color1:      #705050
+!! green + yellow
+!urxvt*color2:      #60b48a
+!urxvt*color3:      #dfaf8f
+!! blue + purple
+!urxvt*color4:      #506070
+!urxvt*color5:      #dc8cc3
+!! cyan + white
+!urxvt*color6:      #8cd0d3
+!urxvt*color7:      #dcdccc
+!! bright-black + bright-red
+!urxvt*color8:      #709080
+!urxvt*color9:      #dca3a3
+!! bright-green + bright-yellow
+!urxvt*color10:     #c3bf9f
+!urxvt*color11:     #f0dfaf
+!! bright-blue + bright-purple
+!urxvt*color12:     #94bff3
+!urxvt*color13:     #ec93d3
+!! bright-cyan + bright-white
+!urxvt*color14:     #93e0e3
+!urxvt*color15:     #ffffff
+!!}}}
 
 
 !{{{ XTERM
@@ -169,6 +223,7 @@ xpdf*background:     white
 xpdf*urlCommand:     /usr/bin/xdg-open %s
 xpdf*antialias:      yes
 xpdf*enableFreetype: yes
+xpdf*viKeys:         yes
 !}}}
 
 
