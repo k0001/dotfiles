@@ -25,11 +25,11 @@ set t_Co=256
 let colors_name = "las"
 
 if version >= 700
-  hi CursorLine     guibg=#14000D ctermbg=232
-  hi CursorColumn   guibg=#14000D ctermbg=232
-  hi MatchParen     guifg=#22CE07 guibg=#14000D gui=bold ctermfg=40 ctermbg=232 cterm=bold
-  hi Pmenu          guifg=#FFFFFF guibg=#323232 ctermfg=255 ctermbg=236
-  hi PmenuSel       guifg=#FFFFFF guibg=#FFC3A2 ctermfg=255 ctermbg=217
+  hi CursorLine     guibg=#14000D ctermbg=none
+  hi CursorColumn   guibg=#14000D ctermbg=none
+  hi MatchParen     guifg=#22CE07 guibg=#14000D gui=bold ctermfg=40 ctermbg=235 cterm=bold
+  hi Pmenu          guifg=#FFFFFF guibg=#323232 ctermfg=255 ctermbg=none
+  hi PmenuSel       guifg=#FFFFFF guibg=#FFC3A2 ctermfg=255 ctermbg=none
 endif
 
 " Background and menu colors
@@ -44,18 +44,19 @@ hi Cursor           guifg=NONE guibg=#FFFFFF ctermbg=255 gui=none
 " disabled bg hi Title            guifg=#FFC3A2 guibg=NONE	gui=bold ctermfg=217 ctermbg=NONE cterm=bold
 " disabled bg hi Visual           guifg=#FF9F87 guibg=#323232 gui=none ctermfg=216 ctermbg=236 cterm=none
 " disabled bg hi SpecialKey       guifg=#AFBA50 guibg=#230F1C gui=none ctermfg=143 ctermbg=234 cterm=none
-hi NonText          guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=234 cterm=none
-hi LineNr           guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=235 cterm=none
-hi StatusLine       guifg=#FFFFFF guibg=none gui=italic ctermfg=255 ctermbg=235 cterm=italic
-hi StatusLineNC     guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=236 cterm=none
-hi VertSplit        guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=235 cterm=none
-hi Folded           guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=232 cterm=none
-hi Title            guifg=#FFC3A2 guibg=none gui=bold ctermfg=217 ctermbg=NONE cterm=bold
-hi Visual           guifg=#FF9F87 guibg=none gui=none ctermfg=216 ctermbg=236 cterm=none
-hi SpecialKey       guifg=#AFBA50 guibg=none gui=none ctermfg=143 ctermbg=234 cterm=none
+hi NonText          guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=none cterm=none
+hi LineNr           guifg=#FFFFFF guibg=none gui=none ctermfg=darkgray ctermbg=none cterm=none
+hi StatusLine       guifg=#FFFFFF guibg=none gui=italic ctermfg=255 ctermbg=none cterm=italic
+hi StatusLineNC     guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=none cterm=none
+hi VertSplit        guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=none cterm=none
+hi Folded           guifg=#FFFFFF guibg=none gui=none ctermfg=255 ctermbg=none cterm=none
+hi Title            guifg=#FFC3A2 guibg=none gui=bold ctermfg=217 ctermbg=none cterm=bold
+hi Visual           guifg=#FF9F87 guibg=none gui=none ctermfg=216 ctermbg=235 cterm=none
+hi SpecialKey       guifg=#AFBA50 guibg=none gui=none ctermfg=143 ctermbg=none cterm=none
 
 " Syntax highlighting
-hi Comment guifg=#FFC3A2 gui=none ctermfg=217 cterm=none
+"hi Comment guifg=#FFC3A2 gui=none ctermfg=217 cterm=none
+hi Comment guifg=#7C7C7C gui=none ctermfg=darkgray cterm=none
 hi Constant guifg=#AFBA50 gui=none ctermfg=143 cterm=none
 hi Number guifg=#AFBA50 gui=none ctermfg=143 cterm=none
 hi Identifier guifg=#D27D1C gui=none ctermfg=172 cterm=none
@@ -64,6 +65,7 @@ hi Function guifg=#77A890 gui=none ctermfg=108 cterm=none
 hi Special guifg=#97E5BB gui=none ctermfg=115 cterm=none
 hi PreProc guifg=#97E5BB gui=none ctermfg=115 cterm=none
 hi Keyword guifg=#22CE07 gui=none ctermfg=40 cterm=none
-hi String guifg=#FF9F87 gui=none ctermfg=216 cterm=none
+"hi String guifg=#FF9F87 gui=none ctermfg=216 cterm=none
+hi String guifg=#FFC3A2 gui=none ctermfg=186 cterm=none
 hi Type guifg=#FF7E55 gui=none ctermfg=209 cterm=none
 hi pythonBuiltin guifg=#D27D1C gui=none ctermfg=172 cterm=none
