@@ -23,7 +23,7 @@ main = do
             borderWidth        = 1
         } `additionalKeys` myKeys
 
-myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+myWorkspaces = ["1:www", "2:chat", "3:mail", "4", "5", "6", "7", "8", "9"]
 myKeys =
     [
       ((mod4Mask .|. shiftMask, xK_z), spawn "xlock"),
