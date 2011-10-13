@@ -1,5 +1,6 @@
-export DEBFULLNAME="Renzo Carbonara"
-export DEBEMAIL="gnuk0001@gmail.com"
+#export HISTFILE=".zsh_history"
+
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 export EDITOR=$(which vim)
 
@@ -28,6 +29,11 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 # Node.js
 export NODE_PATH="$HOME/.node_libraries:$NODE_PATH"
 
+# SBT
+export SBT_OPTS="-Dsbt.boot.directory=$HOME/.sbt/boot/"
+
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+
 
