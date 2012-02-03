@@ -17,12 +17,14 @@ syndaemon -t -k -i 2 -d
 # Music Player Daemon
 mpd ~/.mpd/mpd.conf
 
-# Skype shit.
-$HOME/bin/skype-guiless \
-    skyped -c $HOME/.skyped/skyped.conf \
-           --log $HOME/.skyped/skyped.log \
-           --host 127.0.0.1 \
-           --nofork &
+pidof mpdscribble >& /dev/null
+if [ $? -ne 0 ]; then
+      mpdscribble &
+fi
+
+# Sync clipboards using autocutsel
+autocutsel -selection CLIPBOARD -fork &
+autocutsel -selection PRIMARY -fork &
 
 # XMonad
 $HOME/.xmonad/xmonad-x86_64-linux

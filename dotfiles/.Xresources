@@ -42,8 +42,8 @@ URxvt.underlineURLs: true
 !urxvt*font:     -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
 !urxvt*boldFont: -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-i
 urxvt*font:        xft:Envy Code R:pixelsize=13
-URxvt.italicFont:        xft:Envy Code R:italic:autohint=true:pixelsize=13
-URxvt.boldItalicFont:    xft:Envy Coder R:bold:italic:autohint=true:pixelsize=13
+urxvt*italicFont:   xft:DejaVu Sans Mono:pixelsize=13:antialias=true:italic:autohint=true:hinting=true
+urxvt*bolditalicFont:   xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:italic:autohint=true:hinting=true
 
 !
 ! Cursor
@@ -64,7 +64,7 @@ urxvt*.colorUL:    #ffffff
 urxvt*foreground: #f2f2f2
 urxvt*background: #101010
 ! Normal
-urxvt*color0:    #6c6c6c
+urxvt*color0:    #202020
 urxvt*color1:    #e9897c
 urxvt*color2:    #b6e77d
 urxvt*color3:    #ecebbe
@@ -73,7 +73,7 @@ urxvt*color5:    #ea96eb
 urxvt*color6:    #c9caec
 urxvt*color7:    #f2f2f2
 ! Light
-urxvt*color8:    #747474
+urxvt*color8:    #303030
 urxvt*color9:    #f99286
 urxvt*color10:    #c3f786
 urxvt*color11:    #fcfbcc
@@ -139,6 +139,13 @@ urxvt*color15:    #e2e2e2
 !! bright-cyan + bright-white
 !urxvt*color14:     #93e0e3
 !urxvt*color15:     #ffffff
+
+!! Font size changing commands
+URxvt.keysym.C-minus:    command:\033]710;xft:Envy Code R:pixelsize=13\007
+URxvt.keysym.C-0:    command:\033]710;xft:Envy Code R:pixelsize=18\007
+URxvt.keysym.C-plus:    command:\033]710;xft:Envy Code R:pixelsize=22\007
+
+
 !!}}}
 
 
