@@ -69,8 +69,8 @@ urxvt*.colorUL:    #ffffff
 !
 
 ! cool colors
-urxvt*foreground: #f2f2f2
-urxvt*background: #101010
+!urxvt*foreground: #f2f2f2
+!urxvt*background: #101010
 !! Normal
 !urxvt*color0:    #202020
 !urxvt*color1:    #e9897c
@@ -120,8 +120,8 @@ urxvt*background: #101010
 
 ! Zenburn color-scheme
 !urxvt*background:  #3f3f3f
-!urxvt*background:  #1E2320
-!urxvt*foreground:  #dcdccc
+urxvt*background:  #1E2320
+urxvt*foreground:  #dcdccc
 ! black + red
 !urxvt*color0:     #3f3f3f
 urxvt*color0:      #1E2320
