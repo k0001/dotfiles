@@ -1,6 +1,6 @@
 #export HISTFILE=".zsh_history"
 
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 export EDITOR=$(which vim)
 
@@ -34,6 +34,3 @@ export SBT_OPTS="-Dsbt.boot.directory=$HOME/.sbt/boot/"
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-
-

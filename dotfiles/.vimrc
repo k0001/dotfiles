@@ -2,7 +2,8 @@ autocmd!
 syntax on
 set background=dark
 set showmatch
-set showtabline=2
+"set showtabline=2
+set hidden
 set nu
 set nuw=4
 set cursorline
@@ -13,6 +14,13 @@ set ff=unix
 set nobomb
 set wildmenu
 set cmdheight=2
+
+set foldenable
+set foldmethod=indent
+set foldnestmax=1
+nnoremap <space> za
+vnoremap <space> zf
+
 imap <up> <Nop>
 imap <down> <Nop>
 imap <left> <Nop>
@@ -71,6 +79,17 @@ au! BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au! BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au! BufRead,BufNewFile *.vala setfiletype vala
 au! BufRead,BufNewFile *.vapi setfiletype vala
+" c
+au! BufRead *.c set noexpandtab shiftwidth=8
+au! BufRead *.h set noexpandtab shiftwidth=8
+
+
+filetype plugin on
+"
+" csv shit
+hi! CSVColumnEven term=bold ctermbg=0 guibg=DarkBlue
+hi! CSVColumnOdd  term=bold ctermbg=0 guibg=DarkMagenta
+
 
 " Disable valadoc syntax highlight
 " "let vala_ignore_valadoc = 0
@@ -90,12 +109,12 @@ au! BufRead,BufNewFile *.vapi setfiletype vala
 
 
 "" omnicpp stuff
-""set nocp
-""filetype plugin on
-""command! Oc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .
-""autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-""autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-""set completeopt=menuone
+set nocp
+filetype plugin on
+command! Oc :!ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q .
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+set completeopt=menuone
 
 if &t_Co > 255
     " More than 256 colors are available
