@@ -4,9 +4,12 @@
       nil
       (cons start (range (+ step start) stop step))))
 
+;; Disable menu bar
+(menu-bar-mode)
+
 
 ;; Line numbers
-(setq line-number-mode t)
+(global-linum-mode)
 (setq column-number-mode t)
 
 ;(defun etags-gen-c (path)
@@ -21,7 +24,7 @@
 ;    (visit-tags-table tag-file)))
 
 
-;; DuckDuckGo
+;; DuckDuckGO
 (defun duckduckgo-search-text (text)
   (browse-url
    (concat "https://duckduckgo.com/?q="
@@ -43,6 +46,10 @@
 (global-set-key (kbd "C-x g") 'duckduckgo-search-input)
 
 
+;; Alignment
+(global-set-key (kbd "C-x a r") 'align-regexp)
+
+
 ;; Clipboard
 (setq x-select-enable-clipboard t)
 ;(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
@@ -58,7 +65,7 @@
 
 
 ;; Emacs Whitespace
-(auto-fill-mode)
+(auto-fill-mode t)
 (setq-default fill-column 80)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -68,25 +75,34 @@
 (require 'whitespace)
 (global-whitespace-mode)
 (setq whitespace-style
-      '(face tabs trailing lines-tail newline empty tab-mark))
+      '(face tabs trailing lines-tail newline tab-mark))
 (setq whitespace-line-column nil) ; if nil, fill-column is used instead
 
+;; Ido mode
+(require 'ido)
 ;; Helm
-(add-to-list 'load-path "~/.emacs.d/helm.git-8d65d424")
-(require 'helm-config)
-(helm-mode 1)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;(add-to-list 'load-path "~/.emacs.d/helm.git-8d65d424")
+;(require 'helm-config)
+;(helm-mode 1)
+;(global-set-key (kbd "C-x b") 'helm-mini)
+;(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;(global-set-key (kbd "C-c C-s") (lambda () ((interact) (eshell default-directory))))
 
 
 
 
 ;; evil mode
-(add-to-list 'load-path "~/.emacs.d/evil.git-5b6e5433"
-                        "~/.emacs.d/evil.git-5b6e5433/libs")
+(add-to-list 'load-path "~/.emacs.d/evil.git-5b6e5433")
+(add-to-list 'load-path "~/.emacs.d/evil.git-5b6e5433/lib")
 (require 'evil)
 ; Tune ESC key behaviour so that it plays well with evil mode
-(custom-set-variables '(evil-esc-delay 0))
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(evil-esc-delay 0)
+ '(ido-mode (quote both) nil (ido)))
 (evil-mode t)
 
 
@@ -115,10 +131,9 @@
               backward-delete-function nil)
 
 ;; Haskell mode
-(load "~/.emacs.d/haskell-mode.git-7db6fabc/haskell-site-file")
+(load "~/.emacs.d/haskell-mode.git-6d7a3c48/haskell-site-file")
 
 ; Indentation: Only one of the following methods may be used
-;(add-hook 'haskell-mode-hook 'turn-off-haskell-indent)
 ;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
@@ -127,4 +142,37 @@
 ;(add-to-list 'load-path "~/.emacs.d/haskell-unicode-input-method.git-d8d16814")
 ;(require 'haskell-unicode-input-method)
 ;(add-hook 'haskell-mode-hook
-;          (lambda () (set-input-method "haskell-unicode"))) 
+;          (lambda () (set-input-method "haskell-unicode")))
+
+
+
+;; Haskell Scion
+;; Substitute the desired version for <version>
+;(add-to-list 'load-path "~/.emacs.d/scion-0.3/")
+;(require 'scion)
+;
+;;; if ./cabal/bin is not in your $PATH
+;(setq scion-program "~/.cabal/bin/scion-server")
+;
+;(defun my-haskell-hook ()
+;    ;; Whenever we open a file in Haskell mode, also activate Scion
+;    (scion-mode 1)
+;      ;; Whenever a file is saved, immediately type check it and
+;      ;; highlight errors/warnings in the source.
+;      (scion-flycheck-on-save 1))
+;
+;(add-hook 'haskell-mode-hook (lambda ()
+;    ;; Whenever we open a file in Haskell mode, also activate Scion
+;    (scion-mode 1)
+;      ;; Whenever a file is saved, immediately type check it and
+;      ;; highlight errors/warnings in the source.
+;      (scion-flycheck-on-save 1)))
+;
+;;; WARNING: This causes some versions of Emacs to fail so badly
+;;; that Emacs needs to be restarted.
+;(setq scion-completing-read-function 'ido-completing-read)
+
+
+;; Quack (scheme mode)
+(load "~/.emacs.d/quack-0.44/quack")
+(require 'quack)
