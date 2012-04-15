@@ -56,12 +56,15 @@
 ;(setq interprogram-cut-function 'x-select-text)
 
 ;; Color Themes
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized.git-1aba0ed6")
 (add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
+
+(require 'color-theme-solarized)
 (require 'color-theme)
 (eval-after-load "color-theme"
   '(progn
      (color-theme-initialize)
-     (color-theme-billw)))
+     (color-theme-solarized-dark)))
 
 
 ;; Emacs Whitespace
@@ -176,3 +179,10 @@
 ;; Quack (scheme mode)
 (load "~/.emacs.d/quack-0.44/quack")
 (require 'quack)
+
+;; SLIME
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(add-to-list 'load-path "~/.emacs.d/slime-2012-04-14/")
+(require 'slime)
+(slime-setup)
+
