@@ -126,8 +126,5 @@ fi
 
 alias ls="ls --color"
 alias grep="grep --color"
+alias e="emacsclient -nw -a \"\" -c"
 
-if [[ $TERM == *rxvt* ]]; then
-    # Change the rxvt font size
-    function fsize { printf '\33]50;%s%d\007' "xft:Envy Code R:pixelsize=" $1 }
-fi
