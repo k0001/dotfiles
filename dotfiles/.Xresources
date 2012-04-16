@@ -234,10 +234,10 @@ URxvt.keysym.Mod4-C-M-2: command:\033]710;xft:Envy Code R:pixelsize=15\007
 URxvt.keysym.Mod4-C-M-3: command:\033]710;xft:Envy Code R:pixelsize=17\007
 URxvt.keysym.Mod4-C-M-4: command:\033]710;xft:Envy Code R:pixelsize=19\007
 URxvt.keysym.Mod4-C-M-5: command:\033]710;xft:Envy Code R:pixelsize=20\007
-URxvt.keysym.Mod4-C-M-6: command:\033]710;xft:Envy Code R:pixelsize=22\007
-URxvt.keysym.Mod4-C-M-7: command:\033]710;xft:Envy Code R:pixelsize=23\007
-URxvt.keysym.Mod4-C-M-8: command:\033]710;xft:Envy Code R:pixelsize=24\007
-URxvt.keysym.Mod4-C-M-9: command:\033]710;xft:Envy Code R:pixelsize=25\007
+URxvt.keysym.Mod4-C-M-6: command:\033]710;xft:Envy Code R:pixelsize=21\007
+URxvt.keysym.Mod4-C-M-7: command:\033]710;xft:Envy Code R:pixelsize=22\007
+URxvt.keysym.Mod4-C-M-8: command:\033]710;xft:Envy Code R:pixelsize=23\007
+URxvt.keysym.Mod4-C-M-9: command:\033]710;xft:Envy Code R:pixelsize=24\007
 
 
 !!}}}
@@ -286,19 +286,18 @@ xterm*cursorColor: #DCDCCC
 XLock.mode:         fzort
 !XLock.mode:         atunnels
 !XLock.icongeometry: 256x256
-XLock.username:      Username:
-XLock.password:      Password:
-XLock.foreground:    white
-XLock.background:    Gray20
+XLock.username:      user: 
+XLock.password:      pass: 
+XLock.foreground:    #eee8d5
+XLock.background:    #002b36
 XLock.description:   false
-XLock.echokeys:      true
+XLock.echokeys:      false
 XLock.echokey:       *
 XLock.info:
 !XLock.info:         Enter password to unlock \nSelect icon to lock
-XLock.validate:      Validating login...
-XLock.invalid:       Login failed
-!XLock*font:          -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
-XLock*font:          xft:DejaVu Sans:pixelsize=17
+XLock.validate:      checking...
+XLock.invalid:       no checky!
+XLock*font:          xft:Envy Code R:pixelsize=17\007
 !XLock.ncolors:      200
 !XLock.dpmsstandby:  600
 !XLock.dpmssuspend:  1200
