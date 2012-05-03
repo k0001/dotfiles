@@ -1,0 +1,7 @@
+*~
+#*#
+*.swp
+*.swn
+*.swo
+*.elc
+dotfiles/.emacs.d/auto-save-list/

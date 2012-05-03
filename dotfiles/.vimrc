@@ -7,7 +7,6 @@ set showtabline=1
 set hidden
 set nu
 set nuw=4
-set cursorline
 set nowrap
 set modifiable
 set encoding=utf-8
@@ -20,6 +19,13 @@ set foldmethod=indent
 set foldnestmax=1
 nnoremap <space> za
 vnoremap <space> zf
+
+
+au WinLeave * set nocursorline "nocursorcolumn
+au WinEnter * set cursorline "cursorcolumn
+set cursorline "cursorcolumn
+set colorcolumn=+1
+
 
 " buffet
 map <F2> :Bufferlist<CR>
@@ -111,8 +117,6 @@ let c_math = 1
 let c_gnu = 1
 let c_cpp_warn = 1
 let c_conditional_is_operator = 1
-"let c_syntax_for_h = std_c
-"
 "au! BufRead *.c set noexpandtab shiftwidth=8
 "au! BufRead *.h set noexpandtab shiftwidth=8
 
