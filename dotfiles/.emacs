@@ -8,6 +8,30 @@
       (cons start (range (+ step start) stop step))))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Custom Set Variables
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(evil-want-C-i-jump nil))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Networking
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;(setq socks-override-functions 1)
+;(setq socks-noproxy '("no_proxy"))
+;(setq socks-server '("local socks" "127.0.0.1" 9999 5))
+;(setq url-proxy-services '(("no_proxy" . "local\\.net")
+;                           ("http"     . "127.0.0.1:3128"))
+;(require 'socks)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs interface details
@@ -16,6 +40,7 @@
 (auto-fill-mode t)
 (menu-bar-mode)
 (global-linum-mode)
+(global-hl-line-mode)
 (setq column-number-mode t)
 
 
@@ -93,7 +118,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/rainbow-delimiters-1.3.4")
 (require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(global-rainbow-delimiters-mode)
 
 
 
@@ -106,6 +131,7 @@
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-stop-list (range tab-width 160 tab-width))
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 
 ;; WhiteSpace Mode stuff
@@ -123,13 +149,26 @@
 
 (require 'ido)
 ; The standard "C-x C-b" don't play well when inside tmux.
-(global-set-key (kbd "C-x B") 'list-buffers)
 (ido-mode 'both)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(autoload 'ibuffer "ibuffer" "List buffers." t)
 
+(defun ibuffer-ido-find-file ()
+  "Like `ido-find-file', but default to the directory of the buffer at point."
+  (interactive
+   (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+                              (if (buffer-live-p buf)
+                                  (with-current-buffer buf
+                                    default-directory)
+                                default-directory))))
+     (ido-find-file-in-dir default-directory))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; evil mode, because I still find VIm text motion superior.
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (define-key ibuffer-mode-map "\C-x\C-f"
+              'ibuffer-ido-find-file)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/evil.git-5b6e5433")
@@ -167,10 +206,13 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Haskell mode
+;;;
+;;;Haskell mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (load "~/.emacs.d/haskell-mode.git-647dff0/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
 
 
 
@@ -191,3 +233,16 @@
 (add-to-list 'load-path "~/.emacs.d/slime-2012-04-14")
 (require 'slime)
 (slime-setup)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; TwitteringMode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/twittering-mode.git-535741f1")
+(require 'twittering-mode)
+(setq twittering-use-master-password t)
+
+
+
+
