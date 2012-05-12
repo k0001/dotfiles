@@ -210,7 +210,7 @@
 ;;;Haskell mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "~/.emacs.d/haskell-mode.git-647dff0/haskell-site-file")
+(load "~/.emacs.d/haskell-mode.git-ea8eec6d/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 

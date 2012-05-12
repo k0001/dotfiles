@@ -251,7 +251,6 @@ be set to the preferred literate style."
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Editing-specific commands
     (define-key map (kbd "C-c C-.") 'haskell-mode-format-imports)
-    (define-key map (kbd "C-c i") 'haskell-navigate-imports)
     (define-key map [remap delete-indentation] 'haskell-delete-indentation)
     (define-key map [backtab] 'unindent-for-tab-command)
 
@@ -721,10 +720,47 @@ Can be pretty slow on a real world project. Use at discretion."
   "The tag find function, specific for the particular session."
   (interactive "P")
   (let ((tags-file-name (haskell-session-tags-filename (haskell-session)))
-        (tags-revert-without-query t))
-    (cond ((file-exists-p tags-file-name)
-           (find-tag (haskell-ident-at-point) next-p))
-          (t (haskell-process-generate-tags (haskell-ident-at-point))))))
+        (tags-revert-without-query t)
+        (ident (haskell-ident-at-point)))
+    (when (not (string= "" (haskell-trim ident)))
+      (cond ((file-exists-p tags-file-name)
+             (find-tag ident next-p))
+            (t (haskell-process-generate-tags ident))))))
+
+;; From Bryan O'Sullivan's blog:
+;; http://www.serpentine.com/blog/2007/10/09/using-emacs-to-insert-scc-annotations-in-haskell-code/
+(defun haskell-mode-insert-scc-at-point ()
+  "Insert an SCC annotation at point."
+  (interactive)
+  (if (or (looking-at "\\b\\|[ \t]\\|$") (and (not (bolp))
+					  (save-excursion
+					    (forward-char -1)
+					    (looking-at "\\b\\|[ \t]"))))
+      (let ((space-at-point (looking-at "[ \t]")))
+	(unless (and (not (bolp)) (save-excursion
+				    (forward-char -1)
+				    (looking-at "[ \t]")))
+	  (insert " "))
+	(insert "{-# SCC \"\" #-}")
+	(unless space-at-point
+	  (insert " "))
+	(forward-char (if space-at-point -5 -6)))
+    (error "Not over an area of whitespace")))
+
+;; Also Bryan O'Sullivan's.
+(defun haskell-mode-kill-scc-at-point ()
+  "Kill the SCC annotation at point."
+  (interactive)
+  (save-excursion
+    (let ((old-point (point))
+	  (scc "\\({-#[ \t]*SCC \"[^\"]*\"[ \t]*#-}\\)[ \t]*"))
+      (while (not (or (looking-at scc) (bolp)))
+	(forward-char -1))
+      (if (and (looking-at scc)
+	       (<= (match-beginning 1) old-point)
+	       (> (match-end 1) old-point))
+	  (kill-region (match-beginning 0) (match-end 0))
+	(error "No SCC at point")))))
 
 (eval-after-load "flymake"
   '(add-to-list 'flymake-allowed-file-name-masks
