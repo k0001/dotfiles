@@ -170,12 +170,22 @@
               'ibuffer-ido-find-file)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;; Evil
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/.emacs.d/evil.git-5b6e5433")
 (add-to-list 'load-path "~/.emacs.d/evil.git-5b6e5433/lib")
 (require 'evil)
+
+(defun evil-undefine ()
+   (interactive)
+    (let (evil-mode-map-alist)
+         (call-interactively (key-binding (this-command-keys)))))
+; never map some keys
+(define-key evil-normal-state-map (kbd "TAB") 'evil-undefine)
+(define-key evil-normal-state-map (kbd "RET") 'evil-undefine)
 ; Tune ESC key behaviour so that it responds faster
 (setq evil-esc-delay 0)
+
 (evil-mode t)
 
 
@@ -206,13 +216,35 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;Haskell mode
+;;; Haskell mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (load "~/.emacs.d/haskell-mode.git-ea8eec6d/haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
+;; Scion
+(add-to-list 'load-path "~/tmp/scion.git/emacs")
+(require 'scion)
+(setq scion-program "~/tmp/scion.git/dist/build/scion-server/scion-server")
+
+(defun my-haskell-hook ()
+  (scion-mode 1)
+  (scion-flycheck-on-save 1))
+(add-hook 'haskell-mode-hook 'my-haskell-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ParEdit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/paredit")
+(autoload 'paredit-mode "paredit"
+          "Minor mode for pseudo-structurally editing Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+(add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
 
 
 
@@ -225,14 +257,48 @@
 (setf quack-fontify-style nil)
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SLIME (Common Lisp mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (add-to-list 'load-path "~/.emacs.d/slime-2012-04-14")
+(add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.cl$" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.asd$" . lisp-mode))
 (require 'slime)
 (slime-setup)
+(eval-after-load "slime"
+  '(progn
+     (setq slime-complete-symbol*-fancy t
+           slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+           slime-when-complete-filename-expand t
+           slime-truncate-lines nil
+           slime-autodoc-use-multiline-p t)
+     (slime-setup '(slime-fancy slime-asdf))
+     (define-key slime-repl-mode-map (kbd "C-c ;")
+       'slime-insert-balanced-comments)
+     (define-key slime-repl-mode-map (kbd "C-c M-;")
+       'slime-remove-balanced-comments)
+     (define-key slime-mode-map (kbd "C-c ;")
+       'slime-insert-balanced-comments)
+     (define-key slime-mode-map (kbd "C-c M-;")
+       'slime-remove-balanced-comments)
+     (define-key slime-mode-map (kbd "RET") 'newline-and-indent)
+     (define-key slime-mode-map (kbd "C-j") 'newline)))
+
+(define-key slime-mode-map (kbd "M-t") 'transpose-sexps)
+(define-key slime-mode-map (kbd "C-M-t") 'transpose-chars)
+(define-key slime-mode-map (kbd "M-b") 'backward-sexp)
+(define-key slime-mode-map (kbd "C-M-b") 'backward-char)
+(define-key slime-mode-map (kbd "M-f") 'forward-sexp)
+(define-key slime-mode-map (kbd "C-M-f") 'forward-char)
+
+(add-hook 'lisp-mode-hook (lambda ()
+                            (cond ((not (featurep 'slime))
+                                   (require 'slime)
+                                   (normal-mode)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -242,7 +308,5 @@
 (add-to-list 'load-path "~/.emacs.d/twittering-mode.git-535741f1")
 (require 'twittering-mode)
 (setq twittering-use-master-password t)
-
-
 
 
