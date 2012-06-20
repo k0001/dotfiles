@@ -42,6 +42,7 @@
 (global-linum-mode)
 (global-hl-line-mode)
 (setq column-number-mode t)
+(show-paren-mode t)
 
 
 
@@ -241,10 +242,41 @@
 (add-to-list 'load-path "~/.emacs.d/paredit")
 (autoload 'paredit-mode "paredit"
           "Minor mode for pseudo-structurally editing Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-(add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
+
+(defvar electrify-return-match
+  "[\]}\)\"]"
+  "If this regexp matches the text after the cursor, do an \"electric\"
+  return.")
+
+(defun electrify-return-if-match (arg)
+  "If the text after the cursor matches `electrify-return-match' then
+  open and indent an empty line between the cursor and the text.  Move the
+  cursor to the new line."
+  (interactive "P")
+  (let ((case-fold-search nil))
+    (if (looking-at electrify-return-match)
+        (save-excursion (newline-and-indent)))
+    (newline arg)
+    (indent-according-to-mode)))
+
+(defun my-paredit-mode ()
+  (paredit-mode +1)
+  (turn-on-eldoc-mode)
+  (eldoc-add-command
+   'paredit-backward-delete
+   'paredit-close-round)
+  (local-set-key (kbd "RET") 'electrify-return-if-match)
+  (eldoc-add-command 'electrify-return-if-match))
+
+(add-hook 'emacs-lisp-mode-hook       'my-paredit-mode)
+(add-hook 'lisp-mode-hook             'my-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'my-paredit-mode)
+(add-hook 'scheme-mode-hook           'my-paredit-mode)
+(add-hook 'slime-repl-mode-hook
+          (lambda ()
+            (my-paredit-mode)
+            (define-key slime-repl-mode-map
+              (read-kbd-macro paredit-backward-delete-key) nil)))
 
 
 
@@ -262,6 +294,7 @@
 ;;; SLIME (Common Lisp mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(load "~/quicklisp/slime-helper.el")
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (add-to-list 'load-path "~/.emacs.d/slime-2012-04-14")
 (add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
@@ -286,14 +319,13 @@
      (define-key slime-mode-map (kbd "C-c M-;")
        'slime-remove-balanced-comments)
      (define-key slime-mode-map (kbd "RET") 'newline-and-indent)
-     (define-key slime-mode-map (kbd "C-j") 'newline)))
-
-(define-key slime-mode-map (kbd "M-t") 'transpose-sexps)
-(define-key slime-mode-map (kbd "C-M-t") 'transpose-chars)
-(define-key slime-mode-map (kbd "M-b") 'backward-sexp)
-(define-key slime-mode-map (kbd "C-M-b") 'backward-char)
-(define-key slime-mode-map (kbd "M-f") 'forward-sexp)
-(define-key slime-mode-map (kbd "C-M-f") 'forward-char)
+     (define-key slime-mode-map (kbd "C-j") 'newline)
+     (define-key slime-mode-map (kbd "M-t") 'transpose-sexps)
+     (define-key slime-mode-map (kbd "C-M-t") 'transpose-chars)
+     (define-key slime-mode-map (kbd "M-b") 'backward-sexp)
+     (define-key slime-mode-map (kbd "C-M-b") 'backward-char)
+     (define-key slime-mode-map (kbd "M-f") 'forward-sexp)
+     (define-key slime-mode-map (kbd "C-M-f") 'forward-char)))
 
 (add-hook 'lisp-mode-hook (lambda ()
                             (cond ((not (featurep 'slime))
@@ -310,3 +342,38 @@
 (setq twittering-use-master-password t)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; eproject
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/eproject.git-fead080e")
+(require 'eproject)
+
+(define-project-type canopus (generic)
+  (look-for ".canopus.keep"))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; OfflineIMAP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/offlineimap-el.git-c0d6df70")
+;(require 'offlineimap)
+;(add-hook 'gnus-before-startup-hook 'offlineimap)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; GForth
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar my-gforth-el "~/.emacs.d/gforth-0.7.0/gforth.el")
+(cond ((file-readable-p my-gforth-el)
+       (load-library my-gforth-el)
+       (autoload 'forth-mode my-gforth-el)
+       (setq auto-mode-alist (cons '("\\.fs\\'" . forth-mode) auto-mode-alist))
+       (autoload 'forth-block-mode my-gforth-el)
+       (setq auto-mode-alist (cons '("\\.fb\\'" . forth-block-mode) auto-mode-alist))
+       (add-hook 'forth-mode-hook (function (lambda ()
+                                              (setq forth-program-name "/usr/bin/gforth")
+                                              (setq forth-indent-level 4)
+                                              (setq forth-minor-indent-level 2)
+                                              (setq forth-hilight-level 3))))))
