@@ -14,9 +14,9 @@ set ff=unix
 set nobomb
 set wildmenu
 set cmdheight=1
-set nofoldenable
-set foldmethod=indent
-set foldnestmax=1
+"set foldenable
+"set foldmethod=indent
+"set foldnestmax=1
 nnoremap <space> za
 vnoremap <space> zf
 
@@ -61,7 +61,8 @@ set softtabstop=4
 set smarttab
 set autoindent
 set smartindent
-set textwidth=120
+set textwidth=72
+set filetype=text
 inoremap # X#
 set list lcs=tab:>-,trail:-,extends:>
 " current line

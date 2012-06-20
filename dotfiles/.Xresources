@@ -223,7 +223,7 @@ URxvt.keysym.Mod4-C-1:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=13\007
 URxvt.keysym.Mod4-C-2:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=15\007
 URxvt.keysym.Mod4-C-3:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=16\007
 URxvt.keysym.Mod4-C-4:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=18\007
-URxvt.keysym.Mod4-C-5:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=19\007
+URxvt.keysym.Mod4-C-5:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=20\007
 URxvt.keysym.Mod4-C-6:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=21\007
 URxvt.keysym.Mod4-C-7:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=22\007
 URxvt.keysym.Mod4-C-8:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=23\007
@@ -233,11 +233,11 @@ URxvt.keysym.Mod4-C-M-1: command:\033]710;xft:Envy Code R:pixelsize=13\007
 URxvt.keysym.Mod4-C-M-2: command:\033]710;xft:Envy Code R:pixelsize=15\007
 URxvt.keysym.Mod4-C-M-3: command:\033]710;xft:Envy Code R:pixelsize=17\007
 URxvt.keysym.Mod4-C-M-4: command:\033]710;xft:Envy Code R:pixelsize=19\007
-URxvt.keysym.Mod4-C-M-5: command:\033]710;xft:Envy Code R:pixelsize=20\007
-URxvt.keysym.Mod4-C-M-6: command:\033]710;xft:Envy Code R:pixelsize=21\007
-URxvt.keysym.Mod4-C-M-7: command:\033]710;xft:Envy Code R:pixelsize=22\007
-URxvt.keysym.Mod4-C-M-8: command:\033]710;xft:Envy Code R:pixelsize=23\007
-URxvt.keysym.Mod4-C-M-9: command:\033]710;xft:Envy Code R:pixelsize=24\007
+URxvt.keysym.Mod4-C-M-5: command:\033]710;xft:Envy Code R:pixelsize=21\007
+URxvt.keysym.Mod4-C-M-6: command:\033]710;xft:Envy Code R:pixelsize=22\007
+URxvt.keysym.Mod4-C-M-7: command:\033]710;xft:Envy Code R:pixelsize=24\007
+URxvt.keysym.Mod4-C-M-8: command:\033]710;xft:Envy Code R:pixelsize=25\007
+URxvt.keysym.Mod4-C-M-9: command:\033]710;xft:Envy Code R:pixelsize=26\007
 
 
 !!}}}
@@ -283,11 +283,10 @@ xterm*cursorColor: #DCDCCC
 
 !{{{ XLOCK
 !XLock.mode:          blank
-XLock.mode:         fzort
-!XLock.mode:         atunnels
+XLock.mode:          bug
 !XLock.icongeometry: 256x256
-XLock.username:      user: 
-XLock.password:      pass: 
+XLock.username:      user:
+XLock.password:      pass:
 XLock.foreground:    #eee8d5
 XLock.background:    #002b36
 XLock.description:   false
