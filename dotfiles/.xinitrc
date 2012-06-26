@@ -25,6 +25,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Sync clipboards using autocutsel
+autocutsel -fork &
 autocutsel -selection CLIPBOARD -fork &
 autocutsel -selection PRIMARY -fork &
 
@@ -32,7 +33,7 @@ autocutsel -selection PRIMARY -fork &
 #ibus-daemon --xim -d
 
 # Wallpaper
-xloadimage -onroot -fullscreen $HOME/keep-calm-and-curry-on.jpg
+#xloadimage -onroot -fullscreen $HOME/keep-calm-and-curry-on.jpg
 
 # Gnome Keyring Daemon
 /usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh

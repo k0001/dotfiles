@@ -38,7 +38,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (auto-fill-mode t)
-(menu-bar-mode)
 (global-linum-mode)
 (global-hl-line-mode)
 (setq column-number-mode t)
@@ -93,8 +92,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-(setq interprogram-cut-function 'x-select-text)
+;(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+;(setq interprogram-cut-function 'x-select-text)
 
 
 
@@ -225,14 +224,14 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 ;; Scion
-(add-to-list 'load-path "~/tmp/scion.git/emacs")
-(require 'scion)
-(setq scion-program "~/tmp/scion.git/dist/build/scion-server/scion-server")
-
-(defun my-haskell-hook ()
-  (scion-mode 1)
-  (scion-flycheck-on-save 1))
-(add-hook 'haskell-mode-hook 'my-haskell-hook)
+;(add-to-list 'load-path "~/tmp/scion.git/emacs")
+;(require 'scion)
+;(setq scion-program "~/tmp/scion.git/dist/build/scion-server/scion-server")
+;
+;(defun my-haskell-hook ()
+;  (scion-mode 1)
+;  (scion-flycheck-on-save 1))
+;(add-hook 'haskell-mode-hook 'my-haskell-hook)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -294,7 +293,7 @@
 ;;; SLIME (Common Lisp mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "~/quicklisp/slime-helper.el")
+;(load "~/quicklisp/slime-helper.el")
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (add-to-list 'load-path "~/.emacs.d/slime-2012-04-14")
 (add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
