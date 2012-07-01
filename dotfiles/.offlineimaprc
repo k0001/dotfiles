@@ -1,0 +1,98 @@
+[general]
+#ui = ttyui
+accounts = renzo@satellogic.com, gnu@k0001.org, renzocarbonara@gmail.com, gnuk0001@gmail.com
+maxsyncaccounts = 4
+socktimeout = 60
+pythonfile = ~/.offlineimap.py
+
+
+[Account renzo@satellogic.com]
+localrepository = local~renzo@satellogic.com
+remoterepository = remote~renzo@satellogic.com
+
+[Repository local~renzo@satellogic.com]
+type = Maildir
+localfolders = ~/.mail/renzo@satellogic.com
+holdconnectionopen = yes
+nametrans = nt_local
+
+[Repository remote~renzo@satellogic.com]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = renzo@satellogic.com
+#remotepasseval = get_password("renzo@satellogic.com")
+ssl = yes
+cert_fingerprint = f3043dd689a2e7dddfbef82703a6c65ea9b634c1
+maxconnections = 4
+realdelete = no
+folderfilter = lambda foldername: foldername in ['INBOX']
+nametrans = nt_remote
+
+
+[Account gnu@k0001.org]
+localrepository = local~gnu@k0001.org
+remoterepository = remote~gnu@k0001.org
+
+[Repository local~gnu@k0001.org]
+type = Maildir
+localfolders = ~/.mail/gnu@k0001.org
+holdconnectionopen = yes
+nametrans = nt_local
+
+[Repository remote~gnu@k0001.org]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = gnu@k0001.org
+ssl = yes
+cert_fingerprint = f3043dd689a2e7dddfbef82703a6c65ea9b634c1
+maxconnections = 4
+realdelete = no
+folderfilter = lambda foldername: foldername in ['INBOX']
+nametrans = nt_remote
+
+
+
+[Account renzocarbonara@gmail.com]
+localrepository = local~renzocarbonara@gmail.com
+remoterepository = remote~renzocarbonara@gmail.com
+
+[Repository local~renzocarbonara@gmail.com]
+type = Maildir
+localfolders = ~/.mail/renzocarbonara@gmail.com
+holdconnectionopen = yes
+nametrans = nt_local
+
+[Repository remote~renzocarbonara@gmail.com]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = renzocarbonara@gmail.com
+ssl = yes
+cert_fingerprint = f3043dd689a2e7dddfbef82703a6c65ea9b634c1
+maxconnections = 4
+realdelete = no
+folderfilter = lambda foldername: foldername in ['INBOX']
+nametrans = nt_remote
+
+
+
+[Account gnuk0001@gmail.com]
+localrepository = local~gnuk0001@gmail.com
+remoterepository = remote~gnuk0001@gmail.com
+
+[Repository local~gnuk0001@gmail.com]
+type = Maildir
+localfolders = ~/.mail/gnuk0001@gmail.com
+holdconnectionopen = yes
+nametrans = nt_local
+
+[Repository remote~gnuk0001@gmail.com]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = gnuk0001@gmail.com
+ssl = yes
+cert_fingerprint = f3043dd689a2e7dddfbef82703a6c65ea9b634c1
+maxconnections = 4
+realdelete = no
+folderfilter = lambda foldername: foldername in ['INBOX']
+nametrans = nt_remote
+

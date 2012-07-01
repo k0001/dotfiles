@@ -1,0 +1,14 @@
+#color status magenta default
+
+  set from = "renzo@carbonara.com.ar"
+  set sendmail = "/usr/bin/msmtp -a renzocarbonara@gmail.com"
+  set mbox = "+renzocarbonara@gmail.com/all_mail"
+unset record
+  set postponed = "+renzocarbonara@gmail.com/drafts"
+  set query_command = "mail-query '%s' ~/.mail/renzocarbonara@gmail.com/INBOX"
+
+macro index ,c "<change-folder>+renzo@satellogic.com/INBOX<return>" "change accounts"
+macro index D "<save-message>+renzocarbonara@gmail.com/trash<enter>" "move message to the trash"
+macro index S "<save-message>+renzocarbonara@gmail.com/spam<enter>" "mark message as spam"
+
+# vim: ft=muttrc

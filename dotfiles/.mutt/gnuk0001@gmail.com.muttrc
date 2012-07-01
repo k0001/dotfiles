@@ -1,0 +1,14 @@
+#color status green default
+
+  set from = "gnuk0001@gmail.com"
+  set sendmail = "/usr/bin/msmtp -a gnuk0001@gmail.com"
+  set mbox = "+gnuk0001@gmail.com/all_mail"
+unset record
+  set postponed = "+gnuk0001@gmail.com/drafts"
+  set query_command = "mail-query '%s' ~/.mail/gnuk0001@gmail.com/INBOX"
+
+macro index ,c "<change-folder>+gnu@k0001.org/INBOX<return>" "change accounts"
+macro index D "<save-message>+gnuk0001@gmail.com/trash<enter>" "move message to the trash"
+macro index S "<save-message>+gnuk0001@gmail.com/spam<enter>" "mark message as spam"
+
+# vim: ft=muttrc

@@ -1,0 +1,14 @@
+#color status cyan default
+
+  set from = "renzo@satellogic.com"
+  set sendmail = "/usr/bin/msmtp -a renzo@satellogic.com"
+  set mbox = "+renzo@satellogic.com/all_mail"
+unset record
+  set postponed = "+renzo@satellogic.com/drafts"
+  set query_command = "mail-query '%s' ~/.mail/renzo@satellogic.com/INBOX"
+
+macro index ,c "<change-folder>+gnuk0001@gmail.com/INBOX<return>" "change accounts"
+macro index D "<save-message>+renzo@satellogic.com/trash<enter>" "move message to the trash"
+macro index S "<save-message>+renzo@satellogic.com/spam<enter>" "mark message as spam"
+
+# vim: ft=muttrc
