@@ -177,3 +177,5 @@ cmap w!! w !sudo tee %
 "
 "autocmd BufEnter *.hs,*.lhs :call SetToCabalBuild()
 ""-----------------------8<--------------------------
+
+autocmd BufEnter *.hs,*.lhs :set tw=80
