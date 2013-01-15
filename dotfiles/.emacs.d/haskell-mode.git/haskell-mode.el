@@ -69,7 +69,7 @@
 ;;
 ;; This mode is based on an editing mode by Simon Marlow 11/1/92
 ;; and heavily modified by Graeme E Moss and Tommy Thorn 7/11/98.
-;; 
+;;
 ;; If you have any problems or suggestions specific to a supported
 ;; module, consult that module for a list of known bugs, and an
 ;; author to contact via email.  For general problems or suggestions,
@@ -143,7 +143,7 @@
 ;;   Altered indent-line-function to indent-relative.
 ;;
 ;; Version 0.100:
-;; 
+;;
 ;;   First official release.
 
 ;; Present Limitations/Future Work (contributions are most welcome!):
@@ -176,8 +176,7 @@
 
 ;; Set load-path
 ;;;###autoload
-(add-to-list 'load-path
-             (or (file-name-directory load-file-name) (car load-path)))
+(when load-file-name (add-to-list 'load-path (file-name-directory load-file-name)))
 
 ;; Set up autoloads for the modules we supply
 (autoload 'turn-on-haskell-decl-scan "haskell-decl-scan"
@@ -195,6 +194,7 @@
 (autoload 'haskell-ds-create-imenu-index "haskell-decl-scan")
 (autoload 'haskell-font-lock-choose-keywords "haskell-font-lock")
 (autoload 'haskell-doc-current-info "haskell-doc")
+(autoload 'haskell-process-generate-tags "haskell-process")
 
 ;; Obsolete functions.
 (defun turn-on-haskell-font-lock ()
@@ -325,7 +325,7 @@ be set to the preferred literate style."
 	       (modify-syntax-entry i "_" table))
 	     (setq i (1+ i)))))
        (standard-syntax-table)))
-    
+
     (modify-syntax-entry ?\` "$`" table)
     (modify-syntax-entry ?\\ "\\" table)
     (mapc (lambda (x)
@@ -351,6 +351,10 @@ be set to the preferred literate style."
   "Return the identifier under point, or nil if none found.
 May return a qualified name."
   (save-excursion
+    ;; Skip whitespace if we're on it.  That way, if we're at "map ", we'll
+    ;; see the word "map".
+    (if (eq ?  (char-syntax (char-after)))
+        (skip-chars-backward " \t"))
     (let ((case-fold-search nil))
       (multiple-value-bind (start end)
           (if (looking-at "\\s_")
@@ -427,7 +431,7 @@ CONFIGURING INDENTATION
       link below), or
 
    3) some people prefer to add custom hooks like the below:
- 
+
       (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
   In order to test each one after enabling you can re-run M-x
@@ -450,9 +454,13 @@ CONFIGURING INDENTATION
 
 (defvar eldoc-print-current-symbol-info-function)
 
+;; For compatibility with Emacs < 24, derive conditionally
+(defalias 'haskell-parent-mode
+  (if (fboundp 'prog-mode) 'prog-mode 'fundamental-mode))
+
 ;; The main mode functions
 ;;;###autoload
-(define-derived-mode haskell-mode fundamental-mode "Haskell"
+(define-derived-mode haskell-mode haskell-parent-mode "Haskell"
   "Major mode for editing Haskell programs.
 Blank lines separate paragraphs, comments start with `-- '.
 \\<haskell-mode-map>
@@ -520,16 +528,51 @@ Invokes `haskell-mode-hook'."
   ;; TABs stops are 8 chars apart, as mandated by the Haskell Report.  --Stef
   (set (make-local-variable 'indent-tabs-mode) nil)
   (set (make-local-variable 'tab-width) 8)
-  (setq haskell-literate nil))
-
-(defun in-comment () (nth 4 (syntax-ppss)))
+  ;; dynamic abbrev support: recognize Haskell identifiers
+  ;; Haskell is case-sensitive language
+  (set (make-local-variable 'dabbrev-case-fold-search) nil)
+  (set (make-local-variable 'dabbrev-case-distinction) nil)
+  (set (make-local-variable 'dabbrev-case-replace) nil)
+  (set (make-local-variable 'dabbrev-abbrev-char-regexp) "\\sw\\|[.]")
+  (setq haskell-literate nil)
+  (make-local-variable 'before-save-hook)
+  (add-hook 'before-save-hook 'haskell-mode-before-save-handler)
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook 'haskell-mode-after-save-handler)
+  )
 
 (defun haskell-fill-paragraph (justify)
   (save-excursion
-    ;; We don't want to reflow code.
-    (unless (in-comment)
-      (end-of-line)) ; Try to get inside a comment
-    (if (in-comment) nil t)))
+    ;; Fill paragraph should only work in comments.
+    ;; The -- comments are handled properly by default
+    ;; The {- -} comments need some extra love.
+    (let* ((syntax-values (syntax-ppss))
+           (comment-num (nth 4 syntax-values)))
+      (cond
+       ((eq t comment-num)
+        ;; standard fill works wonders inside a non-nested comment
+        (fill-comment-paragraph justify))
+
+       ((integerp comment-num)
+        ;; we are in a nested comment. lets narrow to comment content
+        ;; and use plain paragraph fill for that
+        (let* ((comment-start-point (nth 8 syntax-values))
+               (comment-end-point
+                (save-excursion
+                  (re-search-forward "-}" (point-max) t comment-num)
+                  (point)))
+               (fill-paragraph-handle-comment nil))
+          (save-restriction
+            (narrow-to-region (+ 2 comment-start-point) (- comment-end-point 2))
+            (fill-paragraph justify))))
+       ((eolp)
+        ;; do nothing outside of a comment
+        t)
+       (t
+        ;; go to end of line and try again
+        (end-of-line)
+        (haskell-fill-paragraph justify))))))
+
 
 ;; (defun haskell-adaptive-fill ()
 ;;   ;; We want to use "--  " as the prefix of "-- |", etc.
@@ -624,6 +667,16 @@ If nil, use the Hoogle web-site."
 		 (const "ghc -fno-code")
 		 (string :tag "Other command")))
 
+(defcustom haskell-stylish-on-save nil
+  "Whether to run stylish-haskell on the buffer before saving."
+  :group 'haskell
+  :type 'boolean)
+
+(defcustom haskell-tags-on-save nil
+  "Generate tags via hasktags after saving."
+  :group 'haskell
+  :type 'boolean)
+
 (defvar haskell-saved-check-command nil
   "Internal use.")
 
@@ -707,14 +760,43 @@ This function will be called with no arguments.")
            (haskell-process-do-try-info ident)))
         (t (insert " "))))
 
-(defun haskell-mode-save-buffer-and-tags ()
-  "Save the current buffer and generate tags.
-Can be pretty slow on a real world project. Use at discretion."
+(defun haskell-mode-before-save-handler ()
+  "Function that will be called before buffer's saving."
+  (when haskell-stylish-on-save
+    (haskell-mode-stylish-buffer)))
+
+(defun haskell-mode-after-save-handler ()
+  "Function that will be called after buffer's saving."
+  (when haskell-tags-on-save
+    (haskell-process-generate-tags)))
+
+(defun haskell-mode-buffer-apply-command (cmd)
+  "Execute shell command CMD with current buffer as input and
+  replace the whole buffer with the output. If CMD fails the
+  buffer remains unchanged."
+  (let* ((file (buffer-file-name (current-buffer)))
+         (output (with-temp-buffer
+                   (let ((default-directory (if (and (boundp 'haskell-session)
+                                                     haskell-session)
+                                                (haskell-session-cabal-dir haskell-session)
+                                              default-directory)))
+                     (call-process cmd
+                                   file
+                                   (list t nil)
+                                   nil))
+                   (buffer-substring-no-properties (point-min) (point-max)))))
+    (unless (string= "" output)
+      (erase-buffer)
+      (insert output))))
+
+(defun haskell-mode-stylish-buffer ()
+  "Apply stylish-haskell to the current buffer."
   (interactive)
-  (let ((modified (buffer-modified-p)))
-    (save-buffer)
-    (when modified
-        (haskell-process-generate-tags))))
+  (let ((column (current-column))
+        (line (line-number-at-pos)))
+    (haskell-mode-buffer-apply-command "stylish-haskell")
+    (goto-line line)
+    (goto-char (+ column (point)))))
 
 (defun haskell-mode-tag-find (&optional next-p)
   "The tag find function, specific for the particular session."

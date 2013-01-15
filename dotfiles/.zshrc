@@ -133,12 +133,15 @@ alias e="emacsclient -nw -a \"\" -c"
 
 #export HISTFILE=".zsh_history"
 
-export PATH="$HOME/.cabal/bin:$HOME/bin:$HOME/.local/bin:/usr/lib/colorgcc/bin:$PATH"
+export PATH="/usr/lib/ccache/bin/:$HOME/.cabal/bin:$HOME/bin:$HOME/.local/bin:/usr/lib/colorgcc/bin:$PATH"
+export CCACHE_PATH="/usr/bin"
+export CCACHE_DIR="/dev/shm/ccache-$USER"
 
 export EDITOR=$(which vim)
 
 # Colors
 export TERM=xterm-256color
+#export TERM=screen-256color
 
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;31'

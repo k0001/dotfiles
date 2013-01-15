@@ -28,11 +28,7 @@ set colorcolumn=+1
 
 
 " buffet
-map <F2> :Bufferlist<CR>
-
-" Disable this shit
-imap <C-x><C-s> <Nop>
-nmap <C-x><C-s> <Nop>
+map <C-c> :Bufferlist<CR>
 
 imap <up> <Nop>
 imap <down> <Nop>

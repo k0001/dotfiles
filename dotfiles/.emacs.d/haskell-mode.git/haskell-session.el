@@ -25,6 +25,7 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
 (require 'haskell-cabal)
 (require 'haskell-string)
 
@@ -164,7 +165,9 @@
   "Change the session for the current buffer."
   (interactive)
   (haskell-session-clear)
-  (haskell-session))
+  (haskell-session-assign (or (haskell-session-new-assume-from-cabal)
+                              (haskell-session-choose)
+                              (haskell-session-new))))
 
 (defun haskell-session-strip-dir (session file)
   "Strip the load dir from the file path."
@@ -224,11 +227,17 @@
 
 (defun haskell-session-set-cabal-dir (s v)
   "Set the session cabal-dir."
-  (haskell-session-set s 'cabal-dir v))
+  (haskell-session-set s 'cabal-dir v)
+  (haskell-session-set-cabal-checksum s v))
 
 (defun haskell-session-set-current-dir (s v)
   "Set the session current directory."
   (haskell-session-set s 'current-dir v))
+
+(defun haskell-session-set-cabal-checksum (s cabal-dir)
+  "Set the session checksum of .cabal files"
+  (haskell-session-set s 'cabal-checksum
+                       (haskell-cabal-compute-checksum cabal-dir)))
 
 (defun haskell-session-current-dir (s)
   "Get the session current directory."

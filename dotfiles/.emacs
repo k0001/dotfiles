@@ -5,7 +5,7 @@
 (defun range (start stop step)
   (if (> start stop)
       nil
-      (cons start (range (+ step start) stop step))))
+    (cons start (range (+ step start) stop step))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -17,7 +17,11 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(evil-want-C-i-jump nil))
+ '(evil-want-C-i-jump nil)
+ '(haskell-notify-p t)
+ '(haskell-process-type (quote cabal-dev))
+ '(haskell-stylish-on-save t)
+ '(haskell-tags-on-save t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -38,10 +42,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (auto-fill-mode t)
-(global-linum-mode)
 (global-hl-line-mode)
 (setq column-number-mode t)
 (show-paren-mode t)
+
+(global-linum-mode)
+(when (not (display-graphic-p))
+  (setq linum-format "%d "))
+
 
 
 
@@ -102,7 +110,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
-(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized.git-1aba0ed6")
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized.git")
 (require 'color-theme)
 (require 'color-theme-solarized)
 (eval-after-load "color-theme"
@@ -127,6 +135,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Standard emacs stuff
+(menu-bar-mode -1)
 (setq-default fill-column 80)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -181,8 +190,8 @@
     (let (evil-mode-map-alist)
          (call-interactively (key-binding (this-command-keys)))))
 ; never map some keys
-(define-key evil-normal-state-map (kbd "TAB") 'evil-undefine)
-(define-key evil-normal-state-map (kbd "RET") 'evil-undefine)
+;(define-key evil-normal-state-map (kbd "TAB") 'evil-undefine)
+;(define-key evil-normal-state-map (kbd "RET") 'evil-undefine)
 ; Tune ESC key behaviour so that it responds faster
 (setq evil-esc-delay 0)
 
@@ -219,9 +228,73 @@
 ;;; Haskell mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "~/.emacs.d/haskell-mode.git-ea8eec6d/haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(load "~/.emacs.d/haskell-mode.git/haskell-site-file")
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+(add-hook 'haskell-mode-hook 'font-lock-mode)
+
+
+
+(add-hook
+ 'haskell-mode-hook
+ (lambda ()
+   (when (boundp 'ghc-init)
+     (ghc-init))
+   ;; Use simple indentation.
+   (turn-on-haskell-simple-indent)
+   (setq haskell-interactive-prompt "> ")
+   (define-key haskell-mode-map (kbd "<return>")
+     'haskell-simple-indent-newline-same-col)
+   (define-key haskell-mode-map (kbd "C-<return>")
+     'haskell-simple-indent-newline-indent)
+   ;; Load the current file (and make a session if not already made).
+   (define-key haskell-mode-map [?\C-c ?\C-l] 'haskell-process-load-file)
+   (define-key haskell-mode-map [f5] 'haskell-process-load-file)
+   ;; Switch to the REPL.
+   (define-key haskell-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch)
+   ;; “Bring” the REPL, hiding all other windows apart from the source
+   ;; and the REPL.
+   (define-key haskell-mode-map (kbd "C-c i") 'haskell-interactive-bring)
+   ;; Build the Cabal project.
+   (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+   ;; Interactively choose the Cabal command to run.
+   (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+   ;; Get the type and info of the symbol at point, print it in the
+   ;; message buffer.
+   (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+   (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+   ;; Contextually do clever things on the space key, in particular:
+   ;;   1. Complete imports, letting you choose the module name.
+   ;;   2. Show the type of the symbol after the space.
+   (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+   ;; Jump to the imports. Keep tapping to jump between import
+   ;; groups. C-u f8 to jump back again.
+   (define-key haskell-mode-map [f8] 'haskell-navigate-imports)
+   ;; Jump to the definition of the current symbol.
+   (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-tag-find)
+   (define-key evil-normal-state-map (kbd "M-.") 'haskell-mode-tag-find)
+   (define-key evil-motion-state-map (kbd "M-.") 'haskell-mode-tag-find)
+   ;; Indent the below lines on columns after the current column.
+   (define-key haskell-mode-map (kbd "C-<right>")
+     (lambda ()
+       (interactive)
+       (haskell-move-nested 1)))
+   ;; Same as above but backwards.
+   (define-key haskell-mode-map (kbd "C-<left>")
+     (lambda ()
+       (interactive)
+       (haskell-move-nested -1)))))
+
+(add-hook
+ 'haskell-cabal-mode-hook
+ (lambda ()
+   (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+   (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
+   (define-key haskell-cabal-mode-map (kbd "C-c i") 'haskell-interactive-bring)
+   (define-key haskell-cabal-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch)))
+
 
 ;; Scion
 ;(add-to-list 'load-path "~/tmp/scion.git/emacs")
@@ -307,7 +380,9 @@
            slime-complete-symbol-function 'slime-fuzzy-complete-symbol
            slime-when-complete-filename-expand t
            slime-truncate-lines nil
-           slime-autodoc-use-multiline-p t)
+           slime-autodoc-use-multiline-p t
+           common-lisp-hyperspec-root
+             "file:/home/k/docs/books/programming/common-lisp/HyperSpec-7-0/HyperSpec/")
      (slime-setup '(slime-fancy slime-asdf))
      (define-key slime-repl-mode-map (kbd "C-c ;")
        'slime-insert-balanced-comments)
@@ -376,3 +451,9 @@
                                               (setq forth-indent-level 4)
                                               (setq forth-minor-indent-level 2)
                                               (setq forth-hilight-level 3))))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
