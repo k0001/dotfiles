@@ -18,9 +18,9 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(evil-want-C-i-jump nil)
- '(haskell-notify-p t)
+ ;'(hakell-notify-p t)
  '(haskell-process-type (quote cabal-dev))
- '(haskell-stylish-on-save t)
+ ;'(haskell-stylish-on-save t)
  '(haskell-tags-on-save t))
 
 
@@ -190,8 +190,10 @@
     (let (evil-mode-map-alist)
          (call-interactively (key-binding (this-command-keys)))))
 ; never map some keys
-;(define-key evil-normal-state-map (kbd "TAB") 'evil-undefine)
-;(define-key evil-normal-state-map (kbd "RET") 'evil-undefine)
+(define-key evil-normal-state-map (kbd "TAB") 'evil-undefine)
+(define-key evil-normal-state-map (kbd "RET") 'evil-undefine)
+(define-key evil-insert-state-map (kbd "RET") nil)
+(define-key evil-normal-state-map (kbd "SPC") 'evil-undefine)
 ; Tune ESC key behaviour so that it responds faster
 (setq evil-esc-delay 0)
 
@@ -241,7 +243,9 @@
  'haskell-mode-hook
  (lambda ()
    (when (boundp 'ghc-init)
-     (ghc-init))
+     (ghc-init)
+     (when (not (null buffer-file-name))
+       (flymake-mode)))
    ;; Use simple indentation.
    (turn-on-haskell-simple-indent)
    (setq haskell-interactive-prompt "> ")
@@ -294,6 +298,7 @@
    (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
    (define-key haskell-cabal-mode-map (kbd "C-c i") 'haskell-interactive-bring)
    (define-key haskell-cabal-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch)))
+
 
 
 ;; Scion
@@ -459,3 +464,34 @@
 (autoload 'sml-mode "sml-mode" "Major mode for editing SML." t)
 (autoload 'run-sml "sml-proc" "Run an inferior SML process." t)
 (add-to-list 'auto-mode-alist '("\\.\\(sml\\|sig\\)\\'" . sml-mode))
+(add-hook 'sml-mode-hook
+          (lambda ()
+            (setq sml-indent-level 2)
+            (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Markdown
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/markdown-mode")
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist
+             '("\\.\\(md\\|markdow\\|mkdn\\)\\'" . markdown-mode))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Expand Region
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/expand-region.git")
+(require 'expand-region)
+(global-set-key (kbd "C-e") 'er/expand-region)
+(define-key evil-motion-state-map (kbd "C-e") 'er/expand-region)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; MU4E
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/mu-0.9.9/mu4e")
+(require 'mu4e)
+
