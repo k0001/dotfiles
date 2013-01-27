@@ -428,8 +428,6 @@
 (add-to-list 'load-path "~/.emacs.d/eproject.git-fead080e")
 (require 'eproject)
 
-(define-project-type canopus (generic)
-  (look-for ".canopus.keep"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -467,7 +465,21 @@
 (add-hook 'sml-mode-hook
           (lambda ()
             (setq sml-indent-level 2)
+            (local-set-key (kbd "C-c l") 'sml-reload-file)
             (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)))
+
+(defun sml-stop ()
+  (switch-to-sml nil)
+  (end-of-buffer)
+  (comint-delchar-or-maybe-eof 0))
+
+(defun sml-reload-file ()
+  (interactive)
+  (sml-stop)
+  (windmove-up)
+  (sml-load-file))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Markdown
@@ -490,8 +502,24 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Nopaste
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/nopaste.git")
+(require 'nopaste)
+(setq nopaste-nick "k")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; MU4E
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/.emacs.d/mu-0.9.9/mu4e")
 (require 'mu4e)
 
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Agda
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
