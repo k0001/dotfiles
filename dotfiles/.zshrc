@@ -4,7 +4,7 @@
 setopt extendedglob
 setopt prompt_subst
 setopt autocd
-setopt correctall
+setopt correct
 setopt emacs
 setopt nohup
 setopt cdablevars
@@ -134,6 +134,7 @@ alias e="emacsclient -nw -a \"\" -c"
 #export HISTFILE=".zsh_history"
 
 export PATH="/usr/lib/ccache/bin/:$HOME/.cabal/bin:$HOME/bin:$HOME/.local/bin:/usr/lib/colorgcc/bin:$PATH"
+export PATH="/home/k/q/agda-2.3.2/cabal-dev/bin:$PATH"
 export CCACHE_PATH="/usr/bin"
 export CCACHE_DIR="/dev/shm/ccache-$USER"
 
