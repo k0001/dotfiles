@@ -235,17 +235,12 @@
 ;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-
 
 
 (add-hook
  'haskell-mode-hook
  (lambda ()
-   (when (boundp 'ghc-init)
-     (ghc-init)
-     (when (not (null buffer-file-name))
-       (flymake-mode)))
+   (font-lock-mode)
    ;; Use simple indentation.
    (turn-on-haskell-simple-indent)
    (setq haskell-interactive-prompt "> ")
@@ -299,6 +294,15 @@
    (define-key haskell-cabal-mode-map (kbd "C-c i") 'haskell-interactive-bring)
    (define-key haskell-cabal-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch)))
 
+; ghc-mod
+(add-to-list 'load-path "~/q/ghc-mod/cabal-dev/share/ghc-mod-1.11.3")
+(autoload 'ghc-init "ghc" nil t)
+(setq ghc-module-command "~/q/ghc-mod/cabal-dev/bin/ghc-mod")
+(add-hook 'haskell-mode-hook
+          (lambda ()
+            (ghc-init)
+            (when (not (null buffer-file-name))
+              (flymake-mode))))
 
 
 ;; Scion
