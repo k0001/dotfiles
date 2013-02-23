@@ -17,10 +17,9 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(agda2-include-dirs (quote ("." "/home/k/q/agda-2.3.2/lib-0.7/src")))
  '(evil-want-C-i-jump nil)
- ;'(hakell-notify-p t)
  '(haskell-process-type (quote cabal-dev))
- ;'(haskell-stylish-on-save t)
  '(haskell-tags-on-save t))
 
 
@@ -527,3 +526,27 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; OCaml
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/tuareg-2.0.6")
+(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
+(autoload 'tuareg-imenu-set-imenu "tuareg-imenu"
+        "Configuration of imenu for tuareg" t)
+
+(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+
+(setq auto-mode-alist
+              (append '(("\\.ml[ily]?$" . tuareg-mode)
+                                  ("\\.topml$" . tuareg-mode))
+                                        auto-mode-alist))
