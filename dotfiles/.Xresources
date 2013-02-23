@@ -1,7 +1,7 @@
 !{{{ XFT
 Xft.dpi:       96
-Xft.antialias: 1
-Xft.hinting:   1
+Xft.antialias: true
+Xft.hinting:   true
 Xft.hintstyle: hintfull
 Xft.rgba:      rgb
 !}}}
@@ -14,7 +14,8 @@ Xft.rgba:      rgb
 !{{{ URXVT
 !
 ! General
-urxvt*termName:           rxvt-unicode-256color
+! urxvt*termName:           rxvt-unicode-256color
+urxvt*termName:             xterm-256color
 urxvt*loginShell:         true
 urxvt*scrollBar:         false
 urxvt*secondaryScroll:    true
@@ -38,9 +39,9 @@ URxvt.preeditType: OnTheSpot,None
 !
 ! Extensions
 urxvt*perl-lib:        /usr/lib/urxvt/perl/
-urxvt*perl-ext-common: default,url-select,searchable-scrollback
+urxvt*perl-ext-common: default,url-picker,searchable-scrollback
 ! url-select
-URxvt.keysym.M-u:    perl:url-select:select_next
+URxvt.keysym.M-u:    perl:url-picker
 URxvt.urlLauncher:   /usr/bin/xdg-open
 URxvt.underlineURLs: true
 ! Catch ugly URLs
@@ -69,175 +70,112 @@ urxvt*.colorUL:    #ffffff
 !urxvt*transparent:true
 !
 
-! cool colors
-!urxvt*foreground: #f2f2f2
-!urxvt*background: #101010
-!! Normal
-!urxvt*color0:    #202020
-!urxvt*color1:    #e9897c
-!urxvt*color2:    #b6e77d
-!urxvt*color3:    #ecebbe
-!urxvt*color4:    #a9cdeb
-!urxvt*color5:    #ea96eb
-!urxvt*color6:    #c9caec
-!urxvt*color7:    #f2f2f2
-!! Light
-!urxvt*color8:    #303030
-!urxvt*color9:    #f99286
-!urxvt*color10:    #c3f786
-!urxvt*color11:    #fcfbcc
-!urxvt*color12:    #b6defb
-!urxvt*color13:    #fba1fb
-!urxvt*color14:    #d7d9fc
-!urxvt*color15:    #e2e2e2
 
-!!Daisuke colors
-!URxvt*background: #333333
-!URxvt*foreground: #dcdccc
-!!black
-!URxvt*color0: #1e1e1e
-!URxvt*color8: #505050
-!!red
-!URxvt*color1: #b04020
-!URxvt*color9: #dd4010
-!!green
-!URxvt*color2: #afd700
-!URxvt*color10: #daff30
-!!yellow
-!URxvt*color3: #f7cf0a
-!URxvt*color11: #fce70d
-!!blue
-!URxvt*color4: #3060aa
-!URxvt*color12: #6099dd
-!!magenta
-!URxvt*color5: #d6156c
-!URxvt*color13: #fe4365
-!!cyan
-!URxvt*color6: #a0c2de
-!URxvt*color14: #c9dee8
-!!white
-!URxvt*color7: #808080
-!URxvt*color15: #b0b0b0
+! Solarized color scheme for the X Window System
+!
+! http://ethanschoonover.com/solarized
 
-!! Zenburn color-scheme
-!!urxvt*background:  #3f3f3f
-!urxvt*background:  #1E2320
-!urxvt*foreground:  #dcdccc
-!! black + red
-!!urxvt*color0:     #3f3f3f
-!urxvt*color0:      #1E2320
-!urxvt*color1:      #705050
-!! green + yellow
-!urxvt*color2:      #60b48a
-!urxvt*color3:      #dfaf8f
-!! blue + purple
-!urxvt*color4:      #506070
-!urxvt*color5:      #dc8cc3
-!! cyan + white
-!urxvt*color6:      #8cd0d3
-!urxvt*color7:      #dcdccc
-!! bright-black + bright-red
-!urxvt*color8:      #709080
-!urxvt*color9:      #dca3a3
-!! bright-green + bright-yellow
-!urxvt*color10:     #c3bf9f
-!urxvt*color11:     #f0dfaf
-!! bright-blue + bright-purple
-!urxvt*color12:     #94bff3
-!urxvt*color13:     #ec93d3
-!! bright-cyan + bright-white
-!urxvt*color14:     #93e0e3
-!urxvt*color15:     #ffffff
 
-!! drop in Solarized colorscheme for Xresources/Xdefaults
+! Common
 
-!!SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
-!!--------- ------- ---- -------  ----------- ---------- ----------- -----------
-!!base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
-!!base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
-!!base01    #586e75 10/7 brgreen  240 #585858 45 -07 -07  88 110 117 194  25  46
-!!base00    #657b83 11/7 bryellow 241 #626262 50 -07 -07 101 123 131 195  23  51
-!!base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
-!!base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
-!!base2     #eee8d5  7/7 white    254 #e4e4e4 92 -00  10 238 232 213  44  11  93
-!!base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
-!!yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
-!!orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
-!!red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
-!!magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
-!!violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
-!!blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
-!!cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
-!!green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
+#define S_yellow #b58900
+#define S_orange #cb4b16
+#define S_red #dc322f
+#define S_magenta #d33682
+#define S_violet #6c71c4
+#define S_blue #268bd2
+#define S_cyan #2aa198
+#define S_green #859900
 
-#define S_base03        #002b36
-#define S_base02        #073642
-#define S_base01        #586e75
-#define S_base00        #657b83
-#define S_base0         #839496
-#define S_base1         #93a1a1
-#define S_base2         #eee8d5
-#define S_base3         #fdf6e3
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
-urxvt*background:            S_base03
-urxvt*foreground:            S_base00
-urxvt*fading:                40
-urxvt*fadeColor:             S_base03
-urxvt*cursorColor:           S_base1
-urxvt*pointerColorBackground:S_base01
-urxvt*pointerColorForeground:S_base1
-!! black dark/light
-urxvt*color0:                S_base02
-urxvt*color8:                S_base03
-!! red dark/light
-urxvt*color1:                S_red
-urxvt*color9:                S_orange
-!! green dark/light
-urxvt*color2:                S_green
-urxvt*color10:               S_base01
-!! yellow dark/light
-urxvt*color3:                S_yellow
-urxvt*color11:               S_base00
-!! blue dark/light
-urxvt*color4:                S_blue
-urxvt*color12:               S_base0
-!! magenta dark/light
-urxvt*color5:                S_magenta
-urxvt*color13:               S_violet
-!! cyan dark/light
-urxvt*color6:                S_cyan
-urxvt*color14:               S_base1
-!! white dark/light
-urxvt*color7:                S_base2
-urxvt*color15:               S_base3
+
+! Dark
+
+#define S_base03 #002b36
+#define S_base02 #073642
+#define S_base01 #586e75
+#define S_base00 #657b83
+#define S_base0 #839496
+#define S_base1 #93a1a1
+#define S_base2 #eee8d5
+#define S_base3 #fdf6e3
+
+
+! Light
+
+! #define S_base03 #fdf6e3
+! #define S_base02 #eee8d5
+! #define S_base01 #93a1a1
+! #define S_base00 #839496
+! #define S_base0 #657b83
+! #define S_base1 #586e75
+! #define S_base2 #073642
+! #define S_base3 #002b36
+
+
+! To only apply colors to your terminal, for example, prefix
+! the color assignment statement with its name. Example:
+!
+! URxvt*background: S_base03
+
+*background: S_base03
+*foreground: S_base0
+*fading: 40
+*fadeColor: S_base03
+*cursorColor: S_base1
+*pointerColorBackground: S_base01
+*pointerColorForeground: S_base1
+
+*color0: S_base02
+*color1: S_red
+*color2: S_green
+*color3: S_yellow
+*color4: S_blue
+*color5: S_magenta
+*color6: S_cyan
+*color7: S_base2
+*color9: S_orange
+*color8: S_base03
+*color10: S_base01
+*color11: S_base00
+*color12: S_base0
+*color13: S_violet
+*color14: S_base1
+*color15: S_base3
+
+
+
 
 !! Font size changing commands
-URxvt.keysym.Mod4-C-1:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=13\007
-URxvt.keysym.Mod4-C-2:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=15\007
-URxvt.keysym.Mod4-C-3:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=16\007
-URxvt.keysym.Mod4-C-4:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=18\007
-URxvt.keysym.Mod4-C-5:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=20\007
-URxvt.keysym.Mod4-C-6:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=21\007
-URxvt.keysym.Mod4-C-7:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=22\007
-URxvt.keysym.Mod4-C-8:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=23\007
-URxvt.keysym.Mod4-C-9:   command:\033]710;xft:DejaVu Sans Mono:pixelsize=24\007
 
-URxvt.keysym.Mod4-C-M-1: command:\033]710;xft:Envy Code R:pixelsize=13\007
-URxvt.keysym.Mod4-C-M-2: command:\033]710;xft:Envy Code R:pixelsize=15\007
-URxvt.keysym.Mod4-C-M-3: command:\033]710;xft:Envy Code R:pixelsize=17\007
-URxvt.keysym.Mod4-C-M-4: command:\033]710;xft:Envy Code R:pixelsize=19\007
-URxvt.keysym.Mod4-C-M-5: command:\033]710;xft:Envy Code R:pixelsize=21\007
-URxvt.keysym.Mod4-C-M-6: command:\033]710;xft:Envy Code R:pixelsize=22\007
-URxvt.keysym.Mod4-C-M-7: command:\033]710;xft:Envy Code R:pixelsize=24\007
-URxvt.keysym.Mod4-C-M-8: command:\033]710;xft:Envy Code R:pixelsize=25\007
-URxvt.keysym.Mod4-C-M-9: command:\033]710;xft:Envy Code R:pixelsize=26\007
+URxvt.keysym.Mod4-C-1:   command:\033]710;xft:Source Code Pro:style=Semibold:size=13\007
+URxvt.keysym.Mod4-C-2:   command:\033]710;xft:Source Code Pro:style=Semibold:size=14\007
+URxvt.keysym.Mod4-C-3:   command:\033]710;xft:Source Code Pro:style=Semibold:size=15\007
+URxvt.keysym.Mod4-C-4:   command:\033]710;xft:Source Code Pro:style=Semibold:size=16\007
+URxvt.keysym.Mod4-C-5:   command:\033]710;xft:Source Code Pro:style=Semibold:size=17\007
+URxvt.keysym.Mod4-C-6:   command:\033]710;xft:Source Code Pro:style=Semibold:size=18\007
+URxvt.keysym.Mod4-C-7:   command:\033]710;xft:Source Code Pro:style=Semibold:size=19\007
+URxvt.keysym.Mod4-C-8:   command:\033]710;xft:Source Code Pro:style=Semibold:size=20\007
+URxvt.keysym.Mod4-C-9:   command:\033]710;xft:Source Code Pro:style=Semibold:size=21\007
+
+URxvt.keysym.Mod4-C-M-1: command:\033]710;xft:FreeMono:style=Regular:size=13\007
+URxvt.keysym.Mod4-C-M-2: command:\033]710;xft:FreeMono:style=Regular:size=14\007
+URxvt.keysym.Mod4-C-M-3: command:\033]710;xft:FreeMono:style=Regular:size=15\007
+URxvt.keysym.Mod4-C-M-4: command:\033]710;xft:FreeMono:style=Regular:size=16\007
+URxvt.keysym.Mod4-C-M-5: command:\033]710;xft:FreeMono:style=Regular:size=17\007
+URxvt.keysym.Mod4-C-M-6: command:\033]710;xft:FreeMono:style=Regular:size=18\007
+URxvt.keysym.Mod4-C-M-7: command:\033]710;xft:FreeMono:style=Regular:size=19\007
+URxvt.keysym.Mod4-C-M-8: command:\033]710;xft:FreeMono:style=Regular:size=20\007
+URxvt.keysym.Mod4-C-M-9: command:\033]710;xft:FreeMono:style=Regular:size=21\007
+
+URxvt.keysym.Mod4-M-1: command:\033]710;xft:Ubuntu Mono:size=13\007
+URxvt.keysym.Mod4-M-2: command:\033]710;xft:Ubuntu Mono:size=14\007
+URxvt.keysym.Mod4-M-3: command:\033]710;xft:Ubuntu Mono:size=15\007
+URxvt.keysym.Mod4-M-4: command:\033]710;xft:Ubuntu Mono:size=16\007
+URxvt.keysym.Mod4-M-5: command:\033]710;xft:Ubuntu Mono:size=17\007
+URxvt.keysym.Mod4-M-6: command:\033]710;xft:Ubuntu Mono:size=18\007
+URxvt.keysym.Mod4-M-7: command:\033]710;xft:Ubuntu Mono:size=19\007
+URxvt.keysym.Mod4-M-8: command:\033]710;xft:Ubuntu Mono:size=20\007
+URxvt.keysym.Mod4-M-9: command:\033]710;xft:Ubuntu Mono:size=21\007
 
 
 !!}}}
@@ -259,31 +197,12 @@ xterm*eightBitInput: true
 !xterm*boldFont:    -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-iso8859-2
 xterm*font:        xft:Envy Code R:pixelsize=17
 xterm*cursorColor: #DCDCCC
-!! Zenburn
-!xterm*background:  #3f3f3f
-!xterm*foreground:  #dcdccc
-!xterm*color0:      #1E2320
-!xterm*color1:      #705050
-!xterm*color2:      #60b48a
-!xterm*color3:      #dfaf8f
-!xterm*color4:      #506070
-!xterm*color5:      #dc8cc3
-!xterm*color6:      #8cd0d3
-!xterm*color7:      #dcdccc
-!xterm*color8:      #709080
-!xterm*color9:      #dca3a3
-!xterm*color10:     #c3bf9f
-!xterm*color11:     #f0dfaf
-!xterm*color12:     #94bff3
-!xterm*color13:     #ec93d3
-!xterm*color14:     #93e0e3
-!xterm*color15:     #ffffff
 !}}}
 
 
 !{{{ XLOCK
 !XLock.mode:          blank
-XLock.mode:          bug
+XLock.mode:          swarm
 !XLock.icongeometry: 256x256
 XLock.username:      user:
 XLock.password:      pass:
