@@ -538,15 +538,41 @@
 ;;; OCaml
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(add-to-list 'load-path "~/.emacs.d/caml-mode")
+(autoload 'caml-mode "caml" "Major mode for editing OCaml code." t)
+(autoload 'run-caml "inf-caml" "Run an inferior OCaml process." t)
+(autoload 'camldebug "camldebug" "Run ocamldebug on program." t)
+(add-to-list 'interpreter-mode-alist '("ocamlrun" . caml-mode))
+(add-to-list 'interpreter-mode-alist '("ocaml" . caml-mode))
+
 (add-to-list 'load-path "~/.emacs.d/tuareg-2.0.6")
 (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
-(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
-(autoload 'tuareg-imenu-set-imenu "tuareg-imenu"
-        "Configuration of imenu for tuareg" t)
+(autoload 'ocamldebug "ocamldebug" "Run the Caml debugger" t)
 
 (add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
 
 (setq auto-mode-alist
-              (append '(("\\.ml[ily]?$" . tuareg-mode)
-                                  ("\\.topml$" . tuareg-mode))
-                                        auto-mode-alist))
+      (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode)
+                ("\\.eliom$" . tuareg-mode))
+              auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Scala mode & Ensime
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/scala-mode")
+(require 'scala-mode-auto)
+
+(add-to-list 'load-path "~/.emacs.d/ensime_2.10.0-0.9.8.9/elisp")
+(require 'ensime)
+
+;; This step causes the ensime-mode to be started whenever
+;; scala-mode is started for a buffer. You may have to customize this
+;; step if you're not using the standard scala mode.
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Proof General
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-file "~/.emacs.d/ProofGeneral-4.2/generic/proof-site.el")
