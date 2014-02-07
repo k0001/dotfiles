@@ -130,11 +130,24 @@ alias e="emacsclient -nw -a \"\" -c"
 
 
 
+export LD_LIBRARY_PATH="$HOME/opt/ghc-7.6.3/lib:$LD_LIBRARY_PATH"
 
 #export HISTFILE=".zsh_history"
 
-export PATH="/usr/lib/ccache/bin/:$HOME/.cabal/bin:$HOME/bin:$HOME/.local/bin:/usr/lib/colorgcc/bin:$PATH"
-export PATH="/home/k/q/agda-2.3.2/cabal-dev/bin:$PATH"
+export PATH="$HOME/opt/ghc-7.6.3/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/q/agda-2.3.2/cabal-dev/bin:$PATH"
+export PATH="$HOME/tmp/gcc-arm-none-eabi-4_7-2012q4/bin:$PATH"
+export PATH="$HOME/x-tools/arm-unknown-eabi/bin:$PATH"
+export PATH="$HOME/q/ajhc.git/local/bin:$PATH"
+export PATH="$HOME/q/cabal-meta/cabal-dev/bin:$PATH"
+export PATH="$HOME/q/opam-0.9.1/opt/bin:$PATH"
+export PATH="$HOME/tmp/hub.git/opt/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/lib/colorgcc/bin:$PATH"
+export PATH="/usr/lib/ccache/bin/:$PATH"
+
 export CCACHE_PATH="/usr/bin"
 export CCACHE_DIR="/dev/shm/ccache-$USER"
 
@@ -179,3 +192,5 @@ export SBT_OPTS="-Dsbt.boot.directory=$HOME/.sbt/boot/"
 # RVM
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+# OPAM
+# eval `opam config env --root $HOME/.opam`
